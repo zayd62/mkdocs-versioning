@@ -1,4 +1,6 @@
 {
-    "python.pythonPath": "/home/zayd/.local/share/virtualenvs/mkdocs-versioning-aTHNPB14/bin/python",
-    "python.linting.pylamaArgs": ["-i E501"]
+    "python.linting.pylamaArgs": [
+        "-i E501"
+    ],
+    "python.pythonPath": "/home/zayd/.local/share/virtualenvs/mkdocs-versioning-aTHNPB14/bin/python"
 }
