@@ -20,3 +20,7 @@ class Version(BasePlugin):
             print('Warning: ' +
                   'no version detected in mkdocs.yml.You should specify a version number (ideally) according to semantic versioning in mkdocs.yml. exiting')
             sys.exit(1)
+
+        # changing the site name to include the verison number
+        config['site_name'] = config['site_name'] + ' - ' + version
+        print('the new site_name:  ', config['site_name'])
