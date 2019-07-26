@@ -47,3 +47,21 @@ class Version(BasePlugin):
 
         # assign new site_dir to new_dir
         config['site_dir'] = new_dir
+
+        # check if rebuild is true
+        # check if docs for specified version in config already exists
+        # if both cases are true, program should warn that docs are being rebuilt and should wait for user to cancel
+        # if they left rebuilt = True by accident
+        if os.path.isdir(new_dir) and self.config['rebuild'] is True:
+            print('A documentation with the version', version,
+                  'already exists. you set "rebuild: True" so mkdocs will rebuild your docs')
+            print(
+                'mkdocs will wait 5 seconds before it builds to let you cancel the build with CTRL + C')
+
+            for i in range(5, 0, -1):
+                print(i)
+                time.sleep(1)
+            print("mkdocs will continue building")
+
+        # check if version is in the nav bar
+        return config
