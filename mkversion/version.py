@@ -28,3 +28,22 @@ class Version(BasePlugin):
         # creating new directory from site_dir and version number
         new_dir = os.path.join(config['site_dir'], config['extra']['version'])
         print("the new build directory is", new_dir)
+
+        # check if rebuild is false
+        # check if docs for specified version in config already exists
+        # if both cases are true, program should exit as docs that already exist should not have to be rebuilt
+        if os.path.isdir(new_dir) and self.config['rebuild'] is False:
+            print("A documentation with the version", version,
+                  "already exists. You should not need to rebuild a version of the documentation that is already built")
+            print(
+                "if you would like to rebuild, you need to explicitly state that in mkdocs.yml like below: ")
+            print("""
+            plugins:
+              - mkdocs-versioning:
+                  rebuild: True
+            """)
+            print("exiting...")
+            sys.exit(1)
+
+        # assign new site_dir to new_dir
+        config['site_dir'] = new_dir
