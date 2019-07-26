@@ -45,8 +45,6 @@ class Version(BasePlugin):
             print("exiting...")
             sys.exit(1)
 
-        # assign new site_dir to new_dir
-        config['site_dir'] = new_dir
 
         # check if rebuild is true
         # check if docs for specified version in config already exists
@@ -64,4 +62,9 @@ class Version(BasePlugin):
             print("mkdocs will continue building")
 
         # check if version is in the nav bar
+        for i in config:
+            print(i, "-->", config[i])
+
+        print('##################')
+        print(config['nav'])
         return config
