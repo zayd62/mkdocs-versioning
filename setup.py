@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="mkdocs-versioning",
-    version="1.0.0",
+    version="0.1.0",
     author="Zayd Patel",
     author_email="zayd62@gmail.com",
     description="A versioning tool for mkdocs",
@@ -16,7 +16,7 @@ setuptools.setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+        "Development Status :: 4 - Beta",
         "Topic :: Documentation",
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -24,6 +24,9 @@ setuptools.setup(
     entry_points = {
         "console_scripts": [
             'mkdocs-versioning = mkversion.__main__:main'
-        ]
+        ],
+        'mkdocs.plugins': [
+            'mkdocs-versioning = mkversion.entry:Entry',
+    ]
     }
 )
