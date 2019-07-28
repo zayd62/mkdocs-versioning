@@ -21,12 +21,12 @@ setuptools.setup(
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
     ],
-    entry_points = {
+    entry_points={
         "console_scripts": [
             'mkdocs-versioning = mkversion.__main__:main'
         ],
         'mkdocs.plugins': [
             'mkdocs-versioning = mkversion.entry:Entry',
-    ]
+        ]
     }
 )
