@@ -11,7 +11,6 @@ class Version(BasePlugin):
     )
 
     def on_config(self, config, **kwargs):
-
         # extract the version number
         try:
             version = config['extra']['version']
@@ -29,6 +28,12 @@ class Version(BasePlugin):
         new_dir = os.path.join(config['site_dir'], config['extra']['version'])
         print("the new build directory is", new_dir)
 
+        # checking if mkdocs is serving or building
+        # if serving, DO NOT CHANGE SITE_DIR as an error 404 is returned when visting built docs
+        if not is_serving(config['site_dir']):
+            config['site_dir'] = new_dir
+            print('the new config["site_dir"] is ', config['site_dir'])
+
         # check if rebuild is false
         # check if docs for specified version in config already exists
         # if both cases are true, program should exit as docs that already exist should not have to be rebuilt
@@ -45,7 +50,6 @@ class Version(BasePlugin):
             print("exiting...")
             sys.exit(1)
 
-
         # check if rebuild is true
         # check if docs for specified version in config already exists
         # if both cases are true, program should warn that docs are being rebuilt and should wait for user to cancel
@@ -60,11 +64,23 @@ class Version(BasePlugin):
                 print(i)
                 time.sleep(1)
             print("mkdocs will continue building")
-
-        # check if version is in the nav bar
-        for i in config:
-            print(i, "-->", config[i])
-
-        print('##################')
-        print(config['nav'])
         return config
+
+
+def is_serving(site_path: str) -> bool:
+    """
+    detects if mkdocs is serving or building by looking at the site_dir in config
+
+    Arguments:
+        site_path {str} -- the site_dir path
+
+    Returns:
+        bool -- true if serving, false otherwise
+    """
+
+    # if mkdocs is serving, the string "tmp" will be in the path
+    # str.find('tmp') will return -1 if "tmp" is NOT FOUND
+    if site_path.find('tmp') == -1:
+        return False
+    else:
+        return True
