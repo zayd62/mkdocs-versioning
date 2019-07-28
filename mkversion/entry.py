@@ -5,7 +5,7 @@ from mkdocs.plugins import BasePlugin
 from mkdocs.config import config_options
 
 
-class Version(BasePlugin):
+class Entry(BasePlugin):
     config_scheme = (
         ('rebuild', config_options.Type(bool, default=False)),
     )
