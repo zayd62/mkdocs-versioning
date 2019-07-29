@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+from .version import Version
 from mkdocs.plugins import BasePlugin
 from mkdocs.config import config_options
 
@@ -13,7 +14,7 @@ class Entry(BasePlugin):
     def on_config(self, config, **kwargs):
         # extract the version number
         try:
-            version = config['extra']['version']
+            version_num = config['extra']['version']
         except KeyError as e:
             print(e)
             print('Warning: ' +
@@ -21,7 +22,7 @@ class Entry(BasePlugin):
             sys.exit(1)
 
         # changing the site name to include the verison number
-        config['site_name'] = config['site_name'] + ' - ' + version
+        config['site_name'] = config['site_name'] + ' - ' + version_num
         print('the new site_name:  ', config['site_name'])
 
         # creating new directory from site_dir and version number
@@ -38,7 +39,7 @@ class Entry(BasePlugin):
         # check if docs for specified version in config already exists
         # if both cases are true, program should exit as docs that already exist should not have to be rebuilt
         if os.path.isdir(new_dir) and self.config['rebuild'] is False:
-            print("A documentation with the version", version,
+            print("A documentation with the version", version_num,
                   "already exists. You should not need to rebuild a version of the documentation that is already built")
             print(
                 "if you would like to rebuild, you need to explicitly state that in mkdocs.yml like below: ")
@@ -55,7 +56,7 @@ class Entry(BasePlugin):
         # if both cases are true, program should warn that docs are being rebuilt and should wait for user to cancel
         # if they left rebuilt = True by accident
         if os.path.isdir(new_dir) and self.config['rebuild'] is True:
-            print('A documentation with the version', version,
+            print('A documentation with the version', version_num,
                   'already exists. you set "rebuild: True" so mkdocs will rebuild your docs')
             print(
                 'mkdocs will wait 5 seconds before it builds to let you cancel the build with CTRL + C')
