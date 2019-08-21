@@ -45,20 +45,12 @@ class Entry(BasePlugin):
             sys.exit(1)
         return config
 
-        # check if rebuild is true
-        # check if docs for specified version in config already exists
-        # if both cases are true, program should warn that docs are being rebuilt and should wait for user to cancel
-        # if they left rebuilt = True by accident
-        if os.path.isdir(new_dir) and self.config['rebuild'] is True:
-            print('A documentation with the version', version_num,
-                  'already exists. you set "rebuild: True" so mkdocs will rebuild your docs')
-            print(
-                'mkdocs will wait 5 seconds before it builds to let you cancel the build with CTRL + C')
-
-            for i in range(5, 0, -1):
-                print(i)
-                time.sleep(1)
-            print("mkdocs will continue building")
+    def on_post_build(self, config, **kwargs):
+        print('in post build')
+        if is_serving(config['site_dir']):
+            print('mkdocs is serving not building so there is no need to build the version page')
+        else:
+            Version(config)
         return config
 
 
