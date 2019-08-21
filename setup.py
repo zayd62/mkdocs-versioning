@@ -16,14 +16,17 @@ setuptools.setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+        "Development Status :: 4 - Beta",
         "Topic :: Documentation",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
     ],
-    entry_points = {
+    entry_points={
         "console_scripts": [
             'mkdocs-versioning = mkversion.__main__:main'
+        ],
+        'mkdocs.plugins': [
+            'mkdocs-versioning = mkversion.entry:Entry',
         ]
     }
 )
