@@ -50,6 +50,7 @@ class Entry(BasePlugin):
             """)
             print("exiting...")
             sys.exit(1)
+        return config
 
         # check if rebuild is true
         # check if docs for specified version in config already exists
