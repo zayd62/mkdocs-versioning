@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 from .version import Version
 from mkdocs.plugins import BasePlugin
 from mkdocs.config import config_options
@@ -42,13 +41,7 @@ class Entry(BasePlugin):
             print("A documentation with the version", version_num,
                   "already exists. You should not need to rebuild a version of the documentation that is already built")
             print(
-                "if you would like to rebuild, you need to explicitly state that in mkdocs.yml like below: ")
-            print("""
-            plugins:
-              - mkdocs-versioning:
-                  rebuild: True
-            """)
-            print("exiting...")
+                "if you would like to rebuild, you need to delete the folder:", version_num, ". Exiting...")
             sys.exit(1)
         return config
 
