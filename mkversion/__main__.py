@@ -2,6 +2,8 @@ import argparse
 import logging
 import os
 import sys
+from mkdocs import exceptions
+from mkversion import deploy
 
 
 class MyFormatter(logging.Formatter):
@@ -45,6 +47,14 @@ class MyFormatter(logging.Formatter):
 
 
 def main():
+    # help definitions
+
+    config_help = "Provide a specific MkDocs config"
+    commit_message_help = ("A commit message to use when committing to the Github Pages remote branch. Commit {sha} and MkDocs {version} are available as expansions")
+    remote_branch_help = ("The remote branch to commit to for Github Pages. This overrides the value specified in config")
+    remote_name_help = ("The remote name to commit to for Github Pages. This overrides the value specified in config")
+    force_help = "Force the push to the repository."
+    ignore_version_help = "Ignore check that build is not being deployed with an older version of MkDocs."
     #####################################################################
     #            Code for parsing command line arguments                #
     #####################################################################
@@ -53,7 +63,7 @@ def main():
     # https://docs.python.org/3/library/argparse.html
 
     # create the arguent parser
-    parser = argparse.ArgumentParser(description='A description of the cli program')
+    parser = argparse.ArgumentParser(description='A tool that allows the versioning of documentation built using mkdocs')
 
     # mutually exclusive means that only one option can be supplied. supplying both will result in an error
     group = parser.add_mutually_exclusive_group()
@@ -62,11 +72,20 @@ def main():
     group.add_argument('-v', '--verbose', action='store_true', help='Give more output')
     group.add_argument('-q', '--quiet', action='store_true', help='Give no output')
 
-    # a mandatory argument. we also specified that only integers can be supplied
-    parser.add_argument('square', help='This is the help for echo, a mandatory argument of type int', type=int)
+    # create sub parser
+    subparser = parser.add_subparsers(title='Sub-commands', description='List of available sub-commands', help='List of sub-commands')
 
-    # an argument that accepts multiple value seperated by a comma. the "-" means it is optional
-    parser.add_argument('--multiple', help='This optional option accepts multiple options', nargs='*')
+    # add command deploy
+    parser_deploy = subparser.add_parser(
+        'deploy', description='Command used to deploy documentation to GitHub Pages', help='Deploy documentation to Github Pages')
+
+    # add argument for deploy command
+    parser_deploy.add_argument('-f', '--config-file', help=config_help, metavar='FILE', type=argparse.FileType(mode='rb'))
+    parser_deploy.add_argument('-m', '--message', help=commit_message_help)
+    parser_deploy.add_argument('-b', '--remote-branch', help=remote_branch_help)
+    parser_deploy.add_argument('-r', '--remote-name', help=remote_name_help)
+    parser_deploy.add_argument('--force', action='store_true', help=force_help)
+    parser_deploy.add_argument('--ignore-version', action='store_true', help=ignore_version_help)
 
     # writing the arguments to a variable to be accesed
     args = parser.parse_args()
