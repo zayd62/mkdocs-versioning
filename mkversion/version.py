@@ -2,7 +2,6 @@ import os
 import yaml
 import subprocess
 import tempfile
-import pprint
 import shutil
 
 
@@ -33,6 +32,18 @@ class Version():
         head, tail = os.path.split(site_dir)
         built_docs_path = head
 
+        # clean up old files. need to do manually so that built docs are kept but
+        # built docs are in folders
+        item_to_delete = ['assets', 'search']
+        with os.scandir(built_docs_path) as files:
+            for f in files:
+                if not f.is_dir() or (f.name in item_to_delete):
+                    print('deleting', f.name)
+                    try:
+                        os.remove(f.path)
+                    except IsADirectoryError as e:
+                        shutil.rmtree(f.path)
+
         # find the built docs and sort them in order and reverse them
         built_docs = sorted(os.listdir(head))
         built_docs.reverse()
@@ -43,13 +54,14 @@ class Version():
         # creating tempdir to be docs_dir
         tempdir = tempfile.mkdtemp()
         print(tempdir, 'tempdir name')
-        
+
         # set docs_dir to tempdir
         inyaml['docs_dir'] = tempdir
 
         # copy version.md to tempdir
-        versionmd_old_abspath = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'version.md')
-        shutil.copy2(versionmd_old_abspath, tempdir)  
+        versionmd_old_abspath = os.path.join(
+            os.path.abspath(os.path.dirname(__file__)), 'version.md')
+        shutil.copy2(versionmd_old_abspath, tempdir)
 
         # rename version.md to index.md
         versionmd_tempath = os.path.join(tempdir, 'version.md')
@@ -57,7 +69,6 @@ class Version():
         os.rename(versionmd_tempath, versionmd_newname)
 
         config_path = os.path.realpath(outfile.name)
-        # versionmd_relpath = os.path.relpath(versionmd_abspath, config_path)
         homedict = {'Home': 'index.md'}
         nav.append(homedict)
 
@@ -71,9 +82,9 @@ class Version():
         nav.append(versiondict)
 
         # remove mkdocs versioning plugin
-        for i in inyaml['plugins']:
-            if 'mkdocs-versioning' in i:
-                inyaml['plugins'].remove(i)
+        for j in inyaml['plugins']:
+            if 'mkdocs-versioning' in j:
+                inyaml['plugins'].remove(j)
 
         # if there are no plugins left installed, remove the plugin config otherwise errors will occur
         if len(inyaml['plugins']) <= 0:
@@ -88,11 +99,13 @@ class Version():
         # write config file
         yaml.dump(inyaml, outfile, default_flow_style=False)
         outfile.close()
-        
+
         # run mkdocs build
-        subprocess.run(['mkdocs', 'build', '--dirty', '--config-file', config_path])
+        subprocess.run(['mkdocs', 'build', '--dirty',
+                        '--config-file', config_path])
 
         # delete tempdir
         shutil.rmtree(tempdir)
 
-
+        # delete outfile
+        os.remove(config_path)
