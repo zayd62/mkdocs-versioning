@@ -2,7 +2,6 @@ import argparse
 import logging
 import os
 import sys
-from mkdocs import exceptions
 from mkversion import deploy
 
 
@@ -55,6 +54,7 @@ def main():
     remote_name_help = ("The remote name to commit to for Github Pages. This overrides the value specified in config")
     force_help = "Force the push to the repository."
     ignore_version_help = "Ignore check that build is not being deployed with an older version of MkDocs."
+
     #####################################################################
     #            Code for parsing command line arguments                #
     #####################################################################
@@ -73,19 +73,22 @@ def main():
     group.add_argument('-q', '--quiet', action='store_true', help='Give no output')
 
     # create sub parser
-    subparser = parser.add_subparsers(title='Sub-commands', description='List of available sub-commands', help='List of sub-commands')
+    subparser = parser.add_subparsers(title='Sub-commands', description='List of available sub-commands', help='List of sub-commands', dest='subparser_name')
 
     # add command deploy
     parser_deploy = subparser.add_parser(
         'deploy', description='Command used to deploy documentation to GitHub Pages', help='Deploy documentation to Github Pages')
 
-    # add argument for deploy command
+    # add arguments for deploy command
     parser_deploy.add_argument('-f', '--config-file', help=config_help, metavar='FILE', type=argparse.FileType(mode='rb'))
     parser_deploy.add_argument('-m', '--message', help=commit_message_help)
     parser_deploy.add_argument('-b', '--remote-branch', help=remote_branch_help)
     parser_deploy.add_argument('-r', '--remote-name', help=remote_name_help)
     parser_deploy.add_argument('--force', action='store_true', help=force_help)
     parser_deploy.add_argument('--ignore-version', action='store_true', help=ignore_version_help)
+
+    # add default function
+    parser_deploy.set_defaults(func=deploy.deploy)
 
     # writing the arguments to a variable to be accesed
     args = parser.parse_args()
@@ -119,10 +122,12 @@ def main():
 
     logging.root.setLevel(logging.DEBUG)
 
-    # application code go below here
+    #########################################
+    #        Application code below         #
+    #########################################
 
-    # # prints all the arguments
-    # print("args", args)
+    if 'func' in vars(args):
+        args.func(args)
 
     # print('this is the start of the program. This should appear even if verbosity is disabled, unless the quiet option is enabled')
     # # below are logging levels with "debug" being the lowest and "critical" being the highest
