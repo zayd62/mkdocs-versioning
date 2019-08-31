@@ -2,5 +2,8 @@
     "python.linting.pylamaArgs": [
         "-i E501"
     ],
+    "python.formatting.autopep8Args": [
+        "--max-line-length=200"
+    ],
     "python.pythonPath": "/home/zayd/.local/share/virtualenvs/mkdocs-versioning-aTHNPB14/bin/python"
 }
