@@ -2,7 +2,7 @@ import argparse
 import logging
 import os
 import sys
-from mkversion import deploy
+from mkversion import utils
 
 
 class MyFormatter(logging.Formatter):
@@ -78,6 +78,7 @@ def main():
     # add command deploy
     parser_deploy = subparser.add_parser(
         'deploy', description='Command used to deploy documentation to GitHub Pages', help='Deploy documentation to Github Pages')
+    parser_deploy.set_defaults(func=utils.deploy)  # add default function for deploy command
 
     # add arguments for deploy command
     parser_deploy.add_argument('-f', '--config-file', help=config_help, metavar='FILE', type=argparse.FileType(mode='rb'))
@@ -86,9 +87,6 @@ def main():
     parser_deploy.add_argument('-r', '--remote-name', help=remote_name_help)
     parser_deploy.add_argument('--force', action='store_true', help=force_help)
     parser_deploy.add_argument('--ignore-version', action='store_true', help=ignore_version_help)
-
-    # add default function
-    parser_deploy.set_defaults(func=deploy.deploy)
 
     # writing the arguments to a variable to be accesed
     args = parser.parse_args()
