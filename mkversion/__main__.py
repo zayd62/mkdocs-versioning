@@ -54,7 +54,7 @@ def main():
     remote_name_help = ("The remote name to commit to for Github Pages. This overrides the value specified in config")
     force_help = "Force the push to the repository."
     ignore_version_help = "Ignore check that build is not being deployed with an older version of MkDocs."
-
+    sync_description = "Used to sync Gtihub pages branch to built docs directory. Run if local docs are not the same as the ones available on Github pages. e.g after cloning the repository"
     #####################################################################
     #            Code for parsing command line arguments                #
     #####################################################################
@@ -87,6 +87,11 @@ def main():
     parser_deploy.add_argument('-r', '--remote-name', help=remote_name_help)
     parser_deploy.add_argument('--force', action='store_true', help=force_help)
     parser_deploy.add_argument('--ignore-version', action='store_true', help=ignore_version_help)
+
+    # add command sync
+    parser_sync = subparser.add_parser('sync', description=sync_description, help='Sync GitHub Pages to local docs')
+    parser_sync.set_defaults(func=utils.sync)
+    parser_sync.add_argument('-f', '--config-file', help=config_help, metavar='FILE', type=argparse.FileType(mode='rb'))
 
     # writing the arguments to a variable to be accesed
     args = parser.parse_args()
