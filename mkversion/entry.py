@@ -1,19 +1,19 @@
 import os
 import sys
 from .version import Version
+from mkdocs import utils
 from mkdocs.plugins import BasePlugin
 from mkdocs.config import config_options
 
-
 class Entry(BasePlugin):
     config_scheme = (
-        ('rebuild', config_options.Type(bool, default=False)),
+        ('version', config_options.Type(utils.string_types)),
     )
 
     def on_config(self, config, **kwargs):
         # extract the version number
         try:
-            version_num = config['extra']['version']
+            version_num = self.config['version']
         except KeyError as e:
             print(e)
             print('Warning: ' +
@@ -22,22 +22,19 @@ class Entry(BasePlugin):
 
         # changing the site name to include the verison number
         config['site_name'] = config['site_name'] + ' - ' + version_num
-        print('the new site_name:  ', config['site_name'])
 
         # creating new directory from site_dir and version number
-        new_dir = os.path.join(config['site_dir'], config['extra']['version'])
-        print("the new build directory is", new_dir)
+        new_dir = os.path.join(config['site_dir'], version_num)
 
         # checking if mkdocs is serving or building
         # if serving, DO NOT CHANGE SITE_DIR as an error 404 is returned when visting built docs
         if not is_serving(config['site_dir']):
             config['site_dir'] = new_dir
-            print('the new config["site_dir"] is ', config['site_dir'])
 
         # check if rebuild is false
         # check if docs for specified version in config already exists
         # if both cases are true, program should exit as docs that already exist should not have to be rebuilt
-        if os.path.isdir(new_dir) and self.config['rebuild'] is False:
+        if os.path.isdir(new_dir):
             print("A documentation with the version", version_num,
                   "already exists. You should not need to rebuild a version of the documentation that is already built")
             print(
@@ -46,17 +43,17 @@ class Entry(BasePlugin):
         return config
 
     def on_post_build(self, config, **kwargs):
-        print('in post build')
         if is_serving(config['site_dir']):
             print('mkdocs is serving not building so there is no need to build the version page')
         else:
-            Version(config)
+            Version(config, self.config)
         return config
 
 
 def is_serving(site_path: str) -> bool:
     """
-    detects if mkdocs is serving or building by looking at the site_dir in config
+    detects if mkdocs is serving or building by looking at the site_dir in config. if site_dir is a temp
+    dierectory, it assumes mkdocs is serving
 
     Arguments:
         site_path {str} -- the site_dir path

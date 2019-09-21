@@ -3,14 +3,13 @@ import yaml
 import subprocess
 import tempfile
 import shutil
-
+import pprint
 
 class Version():
-    def __init__(self, config):
-        self.config = config
-
+    def __init__(self, config, plugin_config):
+            
         # extract information from config
-        version_num = config['extra']['version']
+        version_num = plugin_config['version']
         site_name = config['site_name']
         site_dir = config['site_dir']
         config_path = config['config_file_path']
@@ -26,7 +25,7 @@ class Version():
 
         # change sitename so that the version number is replaced with the string "Version Page"
         site_name = site_name.replace(version_num, "Version Page")
-
+        
         # calculate where the built version page should be stored.
         # i.e. with all the built docs
         head, tail = os.path.split(site_dir)
@@ -53,7 +52,6 @@ class Version():
 
         # creating tempdir to be docs_dir
         tempdir = tempfile.mkdtemp()
-        print(tempdir, 'tempdir name')
 
         # set docs_dir to tempdir
         inyaml['docs_dir'] = tempdir
@@ -95,6 +93,9 @@ class Version():
 
         # replace site_dir
         inyaml['site_dir'] = built_docs_path
+
+        # replace site_name
+        inyaml['site_name'] = site_name
 
         # write config file
         yaml.dump(inyaml, outfile, default_flow_style=False)
