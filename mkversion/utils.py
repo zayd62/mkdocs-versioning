@@ -48,7 +48,7 @@ def sync(args):
             shutil.rmtree(cfg['site_dir'])
             os.mkdir(cfg['site_dir'])  # rmtree deletes folder so need to recreate folder
         except FileNotFoundError as identifier:
-            print("no site directory")
+            print('no site directory')
 
         # copy files into site directory
         with os.scandir(os.getcwd()) as files:
