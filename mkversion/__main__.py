@@ -48,13 +48,13 @@ class MyFormatter(logging.Formatter):
 def main():
     # help definitions
 
-    config_help = "Provide a specific MkDocs config"
-    commit_message_help = ("A commit message to use when committing to the Github Pages remote branch. Commit {sha} and MkDocs {version} are available as expansions")
-    remote_branch_help = ("The remote branch to commit to for Github Pages. This overrides the value specified in config")
-    remote_name_help = ("The remote name to commit to for Github Pages. This overrides the value specified in config")
-    force_help = "Force the push to the repository."
-    ignore_version_help = "Ignore check that build is not being deployed with an older version of MkDocs."
-    sync_description = "Used to sync Gtihub pages branch to built docs directory. Run if local docs are not the same as the ones available on Github pages. e.g after cloning the repository"
+    config_help = 'Provide a specific MkDocs config'
+    commit_message_help = ('A commit message to use when committing to the Github Pages remote branch. Commit {sha} and MkDocs {version} are available as expansions')
+    remote_branch_help = ('The remote branch to commit to for Github Pages. This overrides the value specified in config')
+    remote_name_help = ('The remote name to commit to for Github Pages. This overrides the value specified in config')
+    force_help = 'Force the push to the repository.'
+    ignore_version_help = 'Ignore check that build is not being deployed with an older version of MkDocs.'
+    sync_description = 'Used to sync Gtihub pages branch to built docs directory. Run if local docs are not the same as the ones available on Github pages. e.g after cloning the repository'
     #####################################################################
     #            Code for parsing command line arguments                #
     #####################################################################
@@ -144,5 +144,5 @@ def main():
     #     'The highest level. Used to indicate a fatal error that has caused or is about to cause the program to stop running entirely.')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
