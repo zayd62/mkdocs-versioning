@@ -1,6 +1,6 @@
 import os
 import sys
-from .version import Version
+from .version import version
 from mkdocs import utils
 from mkdocs.plugins import BasePlugin
 from mkdocs.config import config_options
