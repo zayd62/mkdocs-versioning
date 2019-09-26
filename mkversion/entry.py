@@ -1,9 +1,11 @@
 import os
 import sys
-from .version import version
+
 from mkdocs import utils
-from mkdocs.plugins import BasePlugin
 from mkdocs.config import config_options
+from mkdocs.plugins import BasePlugin
+
+from mkversion.version import version
 
 
 class Entry(BasePlugin):
@@ -13,7 +15,7 @@ class Entry(BasePlugin):
 
     def on_config(self, config, **kwargs):
         # extract the version number
-        version_num = self.extract_version_num(config)
+        version_num = self.extract_version_num()
 
         # changing the site name to include the verison number
         config['site_name'] = config['site_name'] + ' - ' + version_num
@@ -43,14 +45,15 @@ class Entry(BasePlugin):
             version(config, self.config)
         return config
 
-    def extract_version_num(self, config):
+    def extract_version_num(self):
         try:
             version_num = self.config['version']
             return version_num
         except KeyError as e:
             print(e)
             print('Warning: ' +
-                  'no version detected in mkdocs.yml.You should specify a version number (ideally) according to semantic versioning in mkdocs.yml. exiting')
+                  'no version detected in mkdocs.yml.You should specify a version number (ideally) according to '
+                  'semantic versioning in mkdocs.yml. exiting')
             sys.exit(1)
 
     @staticmethod

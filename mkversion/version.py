@@ -1,17 +1,25 @@
 import os
-import yaml
+import shutil
 import subprocess
 import tempfile
-import shutil
+
+import yaml
+
 
 def version(config, plugin_config):
-        
+    """
+    Function that handles the versioning
+
+    Args:
+        config: the config file as a dictionary
+        plugin_config: the plugins config options (version number)
+
+    """
     # extract information from config
     version_num = plugin_config['version']
     site_name = config['site_name']
     site_dir = config['site_dir']
     config_path = config['config_file_path']
-    docs_dir = config['docs_dir']
 
     # read mkdocs.yml
     infile = open(config_path, 'r')
@@ -23,7 +31,7 @@ def version(config, plugin_config):
 
     # change sitename so that the version number is replaced with the string "Version Page"
     site_name = site_name.replace(version_num, 'Version Page')
-    
+
     # calculate where the built version page should be stored.
     # i.e. with all the built docs
     head, tail = os.path.split(site_dir)
@@ -37,7 +45,7 @@ def version(config, plugin_config):
             if not f.is_dir() or (f.name in item_to_delete):
                 try:
                     os.remove(f.path)
-                except IsADirectoryError as e:
+                except IsADirectoryError:
                     shutil.rmtree(f.path)
 
     # find the built docs and sort them in order and reverse them

@@ -41,13 +41,15 @@ def sync(args):
         # clone gh-pages branch into a temp dir
         os.chdir(tempdir)
         subprocess.run(['git', 'clone', '-b', cfg['remote_branch'], cfg['repo_url']])
+        # noinspection PyArgumentList
         os.chdir(os.listdir()[0])
 
         # remove old site folder
         try:
             shutil.rmtree(cfg['site_dir'])
-            os.mkdir(cfg['site_dir'])  # rmtree deletes folder so need to recreate folder
+            os.mkdir(cfg['site_dir'])  # rmtree deletes folder so you need to recreate folder
         except FileNotFoundError as identifier:
+            print(identifier)
             print('no site directory')
 
         # copy files into site directory
