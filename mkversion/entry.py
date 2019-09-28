@@ -17,14 +17,14 @@ class Entry(BasePlugin):
         # extract the version number
         version_num = self.extract_version_num()
 
-        # changing the site name to include the verison number
+        # changing the site name to include the version number
         config['site_name'] = config['site_name'] + ' - ' + version_num
 
         # creating new directory from site_dir and version number
         new_dir = os.path.join(config['site_dir'], version_num)
 
         # checking if mkdocs is serving or building
-        # if serving, DO NOT CHANGE SITE_DIR as an error 404 is returned when visting built docs
+        # if serving, DO NOT CHANGE SITE_DIR as an error 404 is returned when visiting built docs
         if not Entry.is_serving(config['site_dir']):
             config['site_dir'] = new_dir
 
@@ -67,7 +67,7 @@ class Entry(BasePlugin):
     def is_serving(site_path: str) -> bool:
         """
         detects if mkdocs is serving or building by looking at the site_dir in config. if site_dir is a temp
-        dierectory, it assumes mkdocs is serving
+        directory, it assumes mkdocs is serving
 
         Arguments:
             site_path {str} -- the site_dir path
