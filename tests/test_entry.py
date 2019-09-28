@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 import subprocess
@@ -5,27 +6,30 @@ import tempfile
 import unittest
 
 from mkdocs import config
+
 from mkversion.entry import Entry
 
 
-# noinspection PyCallByClass,PyCallByClass
 class TestEntry(unittest.TestCase):
     temp_dir_path = tempfile.mkdtemp()
     git_repo = 'https://github.com/zayd62/mkdocs-versioning-test'
     setUpFailed = True
     cfg = None
+    logging.disable(logging.CRITICAL)
 
-    # noinspection PyCallByClass
     @classmethod
     def setUpClass(cls) -> None:
         """
-        Clones the test repository into a temporary directory and navigates into it
+        various setup code such as;
+            - cloning test repository from GitHub into a temporary directory
+            - setting up a basic argparse to test the cli commands
         """
+
+        # cloning the test repository
         try:
             os.chdir(TestEntry.temp_dir_path)
             print('attempting to download test repository', TestEntry.git_repo, 'to directory', TestEntry.temp_dir_path)
             subprocess.run(['git', 'clone', TestEntry.git_repo], check=True)
-            # noinspection PyArgumentList
             os.chdir(os.listdir()[0])
         except OSError as e:
             print(e)
@@ -36,15 +40,15 @@ class TestEntry(unittest.TestCase):
         else:
             TestEntry.setUpFailed = False
 
+        # failing the test should the setup fail
         if TestEntry.setUpFailed:
-            # noinspection PyCallByClass
             TestEntry.fail(TestEntry, 'setup failed. Stopping tests')
 
+        # loading mkdocs.yml and failing tests if loading fails
         try:
             TestEntry.cfg = config.load_config('mkdocs.yml')
         except Exception as e:
             print(e)
-            # noinspection PyCallByClass
             TestEntry.fail(TestEntry, 'setup failed. Stopping tests')
 
     @classmethod
@@ -56,7 +60,6 @@ class TestEntry(unittest.TestCase):
         shutil.rmtree(TestEntry.temp_dir_path)
 
     def test_extract_version_num(self):
-
         self.assertTrue(TestEntry.cfg['plugins']['mkdocs-versioning'].extract_version_num() == '2.0.0')
 
     def test_docs_exists(self):
