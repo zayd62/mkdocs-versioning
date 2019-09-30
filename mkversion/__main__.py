@@ -7,6 +7,7 @@ from mkversion import utils
 
 
 def main():
+    logging.root.setLevel(logging.DEBUG)
     args = parse_cmd(sys.argv[1:])
 
     # if verbose flag not passed on as an argument, this will disable all logging levels
