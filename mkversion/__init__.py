@@ -59,4 +59,3 @@ hdlr_file.setFormatter(fmt)
 logging.root.addHandler(hdlr_file)
 '''
 
-logging.root.setLevel(logging.DEBUG)
