@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.1.0",
     author="Zayd Patel",
     author_email="zayd62@gmail.com",
-    description="A versioning tool for mkdocs",
+    description="A tool that allows for versioning sites built with mkdocs",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/zayd62/mkdocs-versioning",
