@@ -15,3 +15,5 @@ be missing feature/documentation so if you could help out by either:
 
 1. finding and reporting bugs
 2. contributing by checking out the [issues](https://github.com/zayd62/mkdocs-versioning/issues)
+
+Instruction on how to use the plugin is available at https://zayd62.github.io/mkdocs-versioning/
