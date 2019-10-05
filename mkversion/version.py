@@ -67,7 +67,7 @@ def version(config, plugin_config):
     with open(path_of_version_md, 'w') as f:
         f.write('# Welcome to version selector')
         f.write('\n')
-        f.write('Use the navigation items to select the version of the docs you want to see. 111')
+        f.write('Use the navigation items to select the version of the docs you want to see.')
 
 
     config_path = os.path.realpath(outfile.name)
