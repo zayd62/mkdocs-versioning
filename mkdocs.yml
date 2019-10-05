@@ -1,0 +1,22 @@
+site_name: mkdocs-versioning
+repo_url: 'https://github.com/zayd62/mkdocs-versioning'
+repo_name: 'zayd62/mkdocs-versioning'
+theme: 'material'
+edit_uri: ''
+plugins:
+  - search
+  - mkdocs-versioning:
+      version: 0.1.0
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+nav:
+  - Home : 'index.md'
+  - Getting Started: 'Getting Started.md'
+  - CLI Commands: 'CLI commands.md'
+  - Version: '../'
