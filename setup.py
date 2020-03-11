@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="mkdocs-versioning",
-    version="0.1.0",
+    version="0.2.0",
     author="Zayd Patel",
     author_email="zayd62@gmail.com",
     description="A tool that allows for versioning sites built with mkdocs",
@@ -44,8 +44,8 @@ setuptools.setup(
     project_urls={
         'Documentation': 'https://zayd62.github.io/mkdocs-versioning/'
     },
-    install_requires = [
-        'PyYAML >= 5.1.2',
-        'mkdocs >= 1.0.4'
+    install_requires=[
+        'PyYAML >= 5.3',
+        'mkdocs >= 1.1'
     ]
 )
