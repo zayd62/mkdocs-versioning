@@ -1,7 +1,6 @@
 import os
 import sys
 
-from mkdocs import utils
 from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
 
@@ -10,7 +9,7 @@ from mkversion.version import version
 
 class Entry(BasePlugin):
     config_scheme = (
-        ('version', config_options.Type(utils.string_types)),
+        ('version', config_options.Type(str)),
     )
 
     def on_config(self, config, **kwargs):
