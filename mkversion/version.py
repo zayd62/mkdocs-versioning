@@ -39,14 +39,14 @@ def version(config, plugin_config):
 
     # clean up old files. need to do manually so that built docs are kept but
     # built docs are in folders
+    # refactor https://github.com/zayd62/mkdocs-versioning/pull/45#issuecomment-605449689
     item_to_delete = ['assets', 'search']
     with os.scandir(built_docs_path) as files:
         for f in files:
-            if not f.is_dir() or (f.name in item_to_delete):
-                try:
-                    os.remove(f.path)
-                except IsADirectoryError:
-                    shutil.rmtree(f.path)
+            if not f.is_dir():
+                os.remove(f.path)
+            elif f.name in item_to_delete:
+                shutil.rmtree(f.path)
 
     # find the built docs and sort them in order and reverse them
     built_docs = sorted(os.listdir(head))
