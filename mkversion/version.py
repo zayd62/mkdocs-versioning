@@ -45,7 +45,9 @@ def version(config, plugin_config):
             if not f.is_dir() or (f.name in item_to_delete):
                 try:
                     os.remove(f.path)
-                except IsADirectoryError:
+                # PermissionError happens in OSX see:
+                # https://github.com/zayd62/mkdocs-versioning/issues/32
+                except (IsADirectoryError, PermissionError):
                     shutil.rmtree(f.path)
 
     # find the built docs and sort them in order and reverse them
