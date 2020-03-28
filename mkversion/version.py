@@ -61,14 +61,12 @@ def version(config, plugin_config):
     # set docs_dir to tempdir
     inyaml['docs_dir'] = tempdir
 
-
     # test.pypi does not upload version.md so it needs to be manually created
     path_of_version_md = os.path.join(tempdir, 'index.md')
     with open(path_of_version_md, 'w') as f:
         f.write('# Welcome to version selector')
         f.write('\n')
         f.write('Use the navigation items to select the version of the docs you want to see.')
-
 
     config_path = os.path.realpath(outfile.name)
     homedict = {'Home': 'index.md'}
