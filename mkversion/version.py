@@ -73,13 +73,11 @@ def version(config, plugin_config):
     nav.append(homedict)
 
     # building paths for each version
-    version_path_pair = []
     for i in built_docs:
         nav_item = {}
         nav_item[i] = i + '/'
-        version_path_pair.append(nav_item)
-    versiondict = {'Version Select': version_path_pair}
-    nav.append(versiondict)
+        nav.append(nav_item)
+
 
     # remove mkdocs versioning plugin
     for j in inyaml['plugins']:
