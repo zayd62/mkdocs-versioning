@@ -1,9 +1,11 @@
 import os
 import shutil
 import subprocess
-import tempfile
+import time
 
 import yaml
+from mkdocs import config as mkconfig
+from mkdocs.commands import build
 
 
 def version(config, plugin_config):
@@ -55,21 +57,31 @@ def version(config, plugin_config):
     # take list of built docs and create nav item
     nav = []
 
-    # creating tempdir to be docs_dir
-    tempdir = tempfile.mkdtemp()
+    # creating version selection home page. need to be called index.md. append the original index.md (or README.md as that is valid)
+    # filename to have ".bak"
 
-    # set docs_dir to tempdir
-    inyaml['docs_dir'] = tempdir
+    # renaming original files
+    valid_files_homepage = ['index.md', 'README.md']
+    for x in range(0, len(valid_files_homepage)):
+        valid_files_homepage[x] = os.path.join(config['docs_dir'], valid_files_homepage[x])
 
-    # test.pypi does not upload version.md so it needs to be manually created
-    path_of_version_md = os.path.join(tempdir, 'index.md')
+    # backing up files
+    for vfh in valid_files_homepage:
+        try:
+            os.replace(vfh, vfh + '.bak')
+        except FileNotFoundError:
+            pass
+    
+    # creating version.md page
+    version_page_name = 'index.md'
+    path_of_version_md = os.path.join(config['docs_dir'],version_page_name)
     with open(path_of_version_md, 'w') as f:
         f.write('# Welcome to version selector')
         f.write('\n')
         f.write('Use the navigation items to select the version of the docs you want to see.')
 
     config_path = os.path.realpath(outfile.name)
-    homedict = {'Home': 'index.md'}
+    homedict = {'Home': version_page_name}
     nav.append(homedict)
 
     # building paths for each version
@@ -102,11 +114,23 @@ def version(config, plugin_config):
     outfile.close()
 
     # run mkdocs build
-    subprocess.run(['mkdocs', 'build', '--dirty',
-                    '--config-file', config_path])
+    # subprocess.run(['mkdocs', 'build', '--dirty', '--quiet','--config-file', config_path])
+
+    cnfg_file = open(config_path, 'rb')
+    built_config = mkconfig.load_config(cnfg_file)
+    build.build(built_config, dirty=True)
+    cnfg_file.close()
 
     # delete tempdir
-    shutil.rmtree(tempdir)
+    # shutil.rmtree(tempdir)
 
     # delete outfile
     os.remove(config_path)
+
+    # delete version_page.md and replace with original files
+    os.remove(path_of_version_md)
+    for vfh in valid_files_homepage:
+        try:
+            os.replace(vfh + '.bak', vfh)
+        except FileNotFoundError:
+            pass
