@@ -19,7 +19,6 @@ MarkupSafe==1.1.1
 mccabe==0.6.1
 mkdocs==1.1
 mkdocs-material==4.6.3
--e git+https://github.com/zayd62/mkdocs-versioning.git@afa666b04363b054582775a185da52a92bddbbcb#egg=mkdocs_versioning
 nltk==3.4.5
 pkginfo==1.5.0.1
 pycodestyle==2.5.0
