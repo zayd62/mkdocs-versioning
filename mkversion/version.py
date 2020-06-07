@@ -1,7 +1,6 @@
 import os
+import pathlib
 import shutil
-import subprocess
-import time
 
 import yaml
 from mkdocs import config as mkconfig
@@ -57,24 +56,21 @@ def version(config, plugin_config):
     # take list of built docs and create nav item
     nav = []
 
-    # creating version selection home page. need to be called index.md. append the original index.md (or README.md as that is valid)
-    # filename to have ".bak"
+    # in order to fix issue #48 (https://github.com/zayd62/mkdocs-versioning/issues/48)
+    # we rename the original md files to have a "." so it is ignored when version selection page is built
 
-    # renaming original files
-    valid_files_homepage = ['index.md', 'README.md']
-    for x in range(0, len(valid_files_homepage)):
-        valid_files_homepage[x] = os.path.join(config['docs_dir'], valid_files_homepage[x])
+    # add "." to file name
+    for root, dirs, files in os.walk(config['docs_dir']):
+        for name in files:
+            path = pathlib.Path(os.path.join(root, name))
+            # add "." to the md file
+            filename = path.name
+            if path.suffix == '.md':
+                path.replace(path.with_name('.' + filename))
 
-    # backing up files
-    for vfh in valid_files_homepage:
-        try:
-            os.replace(vfh, vfh + '.bak')
-        except FileNotFoundError:
-            pass
-    
     # creating version.md page
     version_page_name = 'index.md'
-    path_of_version_md = os.path.join(config['docs_dir'],version_page_name)
+    path_of_version_md = os.path.join(config['docs_dir'], version_page_name)
     with open(path_of_version_md, 'w') as f:
         f.write('# Welcome to version selector')
         f.write('\n')
@@ -89,7 +85,6 @@ def version(config, plugin_config):
         nav_item = {}
         nav_item[i] = i + '/'
         nav.append(nav_item)
-
 
     # remove mkdocs versioning plugin
     for j in inyaml['plugins']:
@@ -113,9 +108,6 @@ def version(config, plugin_config):
     yaml.dump(inyaml, outfile, default_flow_style=False)
     outfile.close()
 
-    # run mkdocs build
-    # subprocess.run(['mkdocs', 'build', '--dirty', '--quiet','--config-file', config_path])
-
     cnfg_file = open(config_path, 'rb')
     built_config = mkconfig.load_config(cnfg_file)
     build.build(built_config, dirty=True)
@@ -127,10 +119,11 @@ def version(config, plugin_config):
     # delete outfile
     os.remove(config_path)
 
-    # delete version_page.md and replace with original files
-    os.remove(path_of_version_md)
-    for vfh in valid_files_homepage:
-        try:
-            os.replace(vfh + '.bak', vfh)
-        except FileNotFoundError:
-            pass
+    # remove "." from md file
+    for root, dirs, files in os.walk(config['docs_dir']):
+        for name in files:
+            path = pathlib.Path(os.path.join(root, name))
+            # remove "." from the md file
+            if path.suffix == '.md':
+                filename = path.name.strip('.')
+                path.replace(path.with_name(filename))

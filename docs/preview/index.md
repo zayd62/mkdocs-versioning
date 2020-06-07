@@ -20,19 +20,31 @@ The CLI will require the following data:
 - **Author name**: Your name or that of your organization
 - **Author email**: Email for communication
 - **Year**: The current year
+- **Python version**: 3.6 (default), 3.7 (only available for [development](../develop/index.md)) and 3.8 (untested).
 - **One of the three available storage systems**: postgresql (default), mysql or sqlite
 - **The version of Elasticsearch**: 7 (default) or 6
-- **Storage backend**: Local file system or in a S3-like backend. If S3 is chosen a MinIO container is provided, however, you can set it up to use your own. See more in [S3 extension](../extensions/s3.md)
+- **Storage backend**: Local file system (default) or in a S3-like backend. If S3 is chosen a MinIO container is provided, however, you can set it up to use your own. See more in [S3 extension](../extensions/s3.md)
 
 It will also generate a test private key.
 
 Let's do it! Pressing `[Enter]` selects the option in brackets `[]`.
 
+!!! warning "Choose Python 3.6"
+    This tutorial takes you through the creation of a containerized instance. Therefore, only Python 3.6 is supported, if you wish to use other versions please follow the [development](../develop/index.md) tutorial.
+
+!!! info "Flavour is now an argument"
+    The flavour is now an argument, which defaults to RDM. In addition, it is
+    case insensitive so it accepts both *rdm* and *RDM*. We have added it
+    below for completion but it is not needed, `invenio-cli init` would have
+    the same effect.
+
 ``` bash
-invenio-cli init --flavour=RDM
+invenio-cli init rdm
 ```
+
 ``` console
 Initializing RDM application...
+Running cookiecutter...
 project_name [My Site]: InvenioRDM Preview
 project_shortname [inveniordm-preview]:
 project_site [inveniordm-preview.com]:
@@ -41,24 +53,27 @@ description [Invenio RDM InvenioRDM Preview Instance]:
 author_name [CERN]:
 author_email [info@inveniordm-preview.com]:
 year [2020]:
+Select python_version:
+1 - 3.6
+2 - 3.7 (development only)
+3 - 3.8 (untested)
+Choose from 1, 2, 3 [1]:
 Select database:
 1 - postgresql
 2 - mysql
 3 - sqlite
-Choose from 1, 2, 3 (1, 2, 3) [1]:
+Choose from 1, 2, 3 [1]:
 Select elasticsearch:
 1 - 7
 2 - 6
-Choose from 1, 2 (1, 2) [1]:
+Choose from 1, 2 [1]:
 Select file_storage:
 1 - local
 2 - S3
-Choose from 1, 2 (1, 2) [1]:
+Choose from 1, 2 [1]:
 -------------------------------------------------------------------------------
 
 Generating SSL certificate and private key for testing....
-Can't load /home/youruser/.rnd into RNG
-139989104693696:error:2406F079:random number generator:RAND_load_file:Cannot open file:../crypto/rand/randfile.c:88:Filename=/home/youruser/.rnd
 Generating a RSA private key
 ..................++++
 ..................................++++
@@ -82,10 +97,11 @@ drwxr-xr-x 3 youruser youruser 4096 Feb 19 13:45 assets/
 drwxr-xr-x 4 youruser youruser 4096 Feb 19 13:45 docker/
 -rw-r--r-- 1 youruser youruser 2932 Feb 19 13:45 docker-compose.full.yml
 -rw-r--r-- 1 youruser youruser  943 Feb 19 13:45 docker-compose.yml
+-rw-r--r-- 1 youruser youruser 2665 Feb 19 13:45 docker-services.yml
 -rw-r--r-- 1 youruser youruser 1152 Feb 19 13:45 Dockerfile
 -rw-r--r-- 1 youruser youruser   46 Feb 19 13:45 .dockerignore
--rw-r--r-- 1 youruser youruser 2665 Feb 19 13:45 docker-services.yml
 -rw-r--r-- 1 youruser youruser 2018 Feb 19 13:45 .invenio
+-rw-r--r-- 1 youruser youruser 2018 Feb 19 13:45 .invenio.private
 -rw-r--r-- 1 youruser youruser 1504 Feb 19 13:45 invenio.cfg
 drwxr-xr-x 2 youruser youruser 4096 Feb 19 13:45 logs/
 -rw-r--r-- 1 youruser youruser  431 Feb 19 13:45 Pipfile
@@ -110,18 +126,26 @@ directory and do so:
 
 ``` bash
 cd inveniordm-preview
-invenio-cli containerize
+invenio-cli containerize --pre
 ```
 ``` console
 <... build output ignored ...>
 Instance running!
-Visit https://localhost
+Visit https://127.0.0.1
 ```
 ``` bash
 firefox https://localhost
 ```
 
-You now have a running instance of InvenioRDM at [https://localhost](https://localhost),
+**Notes and Known Issues**
+
+- You may see the following error message `TypeError: Object.fromEntries is not a function`.
+  This means you need to update your base Invenio docker image because node 13+ is needed.
+  Run `docker pull inveniosoftware/centos7-python:3.6` before running `invenio-cli containerize --pre` again.
+
+## Add random records
+
+You now have a running instance of InvenioRDM at [https://127.0.0.1](https://127.0.0.1),
 but it doesn't have any records in it. For demonstration purposes, we will add
 randomly generated records:
 
@@ -152,9 +176,9 @@ You can use `docker ps` to get the name or id of the web-api or web-ui container
 In just two commands you can get a preview of InvenioRDM:
 
 ``` bash
-invenio-cli init --flavour=RDM
+invenio-cli init rdm
 cd <project name>
-invenio-cli containerize
+invenio-cli containerize --pre
 ```
 
 These instructions don't provide you with a nice development experience though.
