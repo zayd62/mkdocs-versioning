@@ -1,5 +1,8 @@
 # Make it your own
 
+!!! error "Temporarily not supported"
+    Due to the migration to Semantic-UI the UI customization features are not supported. They will be enabled as soon as possible. However, it is possible to customize the vocabularies, permissions, datamodel and add custom functionality. This means you can continue from the [*vocabulary customization*](#define-a-custom-controlled-vocabulary) section onwards.
+
 You can configure and customize your InvenioRDM instance to best suit your needs.
 From changing the style and look, to extending the data model and defining your
 own permissions, InvenioRDM provides you with much control. And if none of this
@@ -270,10 +273,6 @@ curl -k -XPOST -H "Content-Type: application/json" https://localhost:5000/api/re
     "_owners": [1],
     "_created_by": 1,
     "access_right": "open",
-    "community": {
-        "primary": "Maincom",
-        "secondary": ["Subcom One", "Subcom Two"]
-    },
     "creators": [],
     "identifiers": {
         "DOI": "10.9999/rdm.9999999"
@@ -395,10 +394,6 @@ curl -k -XPOST -H "Content-Type: application/json" https://localhost:5000/api/re
             "lang": "eng"
         }
     ],
-    "community": {
-        "primary": "Maincom",
-        "secondary": ["Subcom One", "Subcom Two"]
-    },
     "licenses": [
         {
             "license": "Berkeley Software Distribution 3",

@@ -10,6 +10,7 @@ from mkversion.version import version
 class Entry(BasePlugin):
     config_scheme = (
         ('version', config_options.Type(str)),
+        ('not_md_dir', config_options.Type(list, default=[]))
     )
 
     def on_config(self, config, **kwargs):
