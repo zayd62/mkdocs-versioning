@@ -58,11 +58,14 @@ def parse_cmd(cmd):
     # create the argument parser
     parser = argparse.ArgumentParser(
         description='A tool that allows the versioning of documentation built using mkdocs')
+
     # mutually exclusive means that only one option can be supplied. supplying both will result in an error
     group = parser.add_mutually_exclusive_group()
+
     # "store_true" means that if the argument is provided, the value of the argument is true
     group.add_argument('-v', '--verbose', action='store_true', help='Give more output')
     group.add_argument('-q', '--quiet', action='store_true', help='Give no output')
+
     # create sub parser
     subparser = parser.add_subparsers(title='Sub-commands', description='List of available sub-commands',
                                       help='List of sub-commands', dest='subparser_name')
@@ -72,8 +75,8 @@ def parse_cmd(cmd):
         'deploy', description='Command used to deploy documentation to GitHub Pages',
         help='Deploy documentation to Github Pages')
     parser_deploy.set_defaults(func=utils.deploy)  # add default function for deploy command
-    # add arguments for deploy command
 
+    # add arguments for deploy command
     parser_deploy.add_argument('-f', '--config-file', help=config_help, metavar='FILE',
                                type=argparse.FileType(mode='rb'))
     parser_deploy.add_argument('-m', '--message', help=commit_message_help)
@@ -86,6 +89,11 @@ def parse_cmd(cmd):
     parser_sync = subparser.add_parser('sync', description=sync_description, help='Sync GitHub Pages to local docs')
     parser_sync.set_defaults(func=utils.sync)
     parser_sync.add_argument('-f', '--config-file', help=config_help, metavar='FILE', type=argparse.FileType(mode='rb'))
+
+    # add command unhide documentation
+    parser_unhide = subparser.add_parser('unhide', description='Unhide the documentation by removing the dot at the beginning of the filename', help='Unhide the documentation')
+    parser_unhide.set_defaults(func=utils.unhide_docs)
+    parser_unhide.add_argument('path', help='the path to the docs directory', metavar='PATH')
 
     # check if no arguments were passed. if true, print help
     if len(cmd) == 0:
