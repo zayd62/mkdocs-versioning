@@ -1,16 +1,19 @@
 import os
+import pathlib
 import sys
+from typing import Dict
 
 from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
 
-from mkversion.version import version
+from mkversion.version import hide_md, unhide_md, version
 
 
 class Entry(BasePlugin):
     config_scheme = (
         ('version', config_options.Type(str)),
-        ('exclude_from_nav', config_options.Type(list, default=[]))
+        ('exclude_from_nav', config_options.Type(list, default=[])),
+        ('version_selection_page', config_options.File())
     )
 
     def on_config(self, config, **kwargs):
@@ -30,19 +33,36 @@ class Entry(BasePlugin):
 
         # check if docs for specified version in config already exists
         # if true, program should exit as docs that already exist should not have to be rebuilt
-        if self.docs_exists(new_dir):
-            print('A documentation with the version', version_num,
-                  'already exists. You should not need to rebuild a version of the documentation that is already built')
-            print(
-                'if you would like to rebuild, you need to delete the folder:', version_num, '. Exiting...')
+        if os.path.isdir(new_dir):
+            print('A documentation with the version', version_num, 'already exists.')
+            print('You should not need to rebuild a version of the documentation that is already built')
+            print('if you would like to rebuild, you need to delete the folder:', version_num, '. Exiting...')
             sys.exit(1)
+
+        # if a custom version page is defined in the config, then hide it for the initial build
+        if self.config['version_selection_page'] is not None:
+            version_page_path = os.path.join(config['docs_dir'], self.config['version_selection_page'])
+            version_page_path = pathlib.Path(version_page_path)
+            if os.path.exists(version_page_path.absolute()):
+                hide_md(version_page_path.absolute())
         return config
 
     def on_post_build(self, config, **kwargs):
         if Entry.is_serving(config['site_dir']):
             print('mkdocs is serving not building so there is no need to build the version page')
-        else:
-            version(config, self.config)
+        elif self.config['version_selection_page'] is not None:
+            # we unhide the custom version selection page
+            version_page_path = os.path.join(config['docs_dir'], self.config['version_selection_page'])
+            version_page_path = pathlib.Path(version_page_path)
+
+            # build path of HIDDEN custom version selection page and unhide
+            # after building the docs
+            version_page_path_with_dot = version_page_path.with_name('.' + version_page_path.name)
+            if os.path.exists(version_page_path_with_dot.absolute()):
+                unhide_md(version_page_path_with_dot.absolute())
+
+        # build version page
+        version(config, self.config)
         return config
 
     def extract_version_num(self):
