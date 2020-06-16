@@ -21,9 +21,13 @@ def hide_documentation(config):
         for name in files:
             path = pathlib.Path(os.path.join(root, name))
             # add "." to the md file
-            filename = path.name
-            if path.suffix == '.md':
-                path.replace(path.with_name('.' + filename))
+            hide_md(path)
+
+
+def hide_md(path):
+    filename = path.name
+    if path.suffix == '.md':
+        path.replace(path.with_name('.' + filename))
 
 
 def unhide_documentation(config):
@@ -32,8 +36,12 @@ def unhide_documentation(config):
             path = pathlib.Path(os.path.join(root, name))
             # remove "." from the md file
             if path.suffix == '.md':
-                filename = path.name.strip('.')
-                path.replace(path.with_name(filename))
+                unhide_md(path)
+
+
+def unhide_md(path):
+    filename = path.name.strip('.')
+    path.replace(path.with_name(filename))
 
 
 def build_default_version_page(path_of_version_md):
@@ -83,12 +91,16 @@ def version(config, plugin_config):
     # in order to fix issue #48 (https://github.com/zayd62/mkdocs-versioning/issues/48)
     # rename the original md files to have a "." so it is ignored when version selection page is built
     hide_documentation(config)
-
-    # build default version page
     version_page_name = 'index.md'
-    path_of_version_md = os.path.join(config['docs_dir'], version_page_name)
-    build_default_version_page(path_of_version_md)
-
+    # build default version page
+    if plugin_config['version_selection_page'] is None:
+        path_of_version_md = os.path.join(config['docs_dir'], version_page_name)
+        build_default_version_page(path_of_version_md)
+    else:
+        # build custom version page
+        custom_version_path = pathlib.Path(plugin_config['version_selection_page'])
+        unhide_md(custom_version_path.with_name('.' + custom_version_path.name))
+        custom_version_path.replace(custom_version_path.with_name('index.md'))
     # take list of built docs and create nav item
     nav = []
     homedict = {'Home': version_page_name}
@@ -130,6 +142,12 @@ def version(config, plugin_config):
     # delete version config
     os.remove(os.path.realpath(version_config.name))
 
+    # rename the custom version selection page if specified otherwise delete the version selection page
+    if plugin_config['version_selection_page'] is not None:
+        pth = pathlib.Path(os.path.join(config['docs_dir'], 'index.md'))
+        pth.replace(custom_version_path)
+    else:
+        os.remove(os.path.join(config['docs_dir'], 'index.md'))
+
     # unhide original documentation
     unhide_documentation(config)
-
