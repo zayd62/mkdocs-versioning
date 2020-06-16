@@ -16,7 +16,16 @@ class Entry(BasePlugin):
         ('version_selection_page', config_options.File())
     )
 
-    def on_config(self, config, **kwargs):
+    def on_config(self, config: Dict[str, str], **kwargs) -> Dict[str, str]:
+        """
+        An event that alters the config in order to prepare it for versioning as well as perform various checks.
+
+        Args:
+            config (Dict[str, str]): the user config (usually mkdocs.yml)
+
+        Returns:
+            [Dict[str, str]]: the altered config
+        """
         # extract the version number
         version_num = self.extract_version_num()
 
@@ -52,7 +61,17 @@ class Entry(BasePlugin):
                 hide_md(version_page_path.absolute())
         return config
 
-    def on_post_build(self, config, **kwargs):
+    def on_post_build(self, config: Dict[str, str], **kwargs) -> Dict[str, str]:
+        """
+        An event that occur after the documentation has been built. This triggers building the version selection page as well as performing several more check.
+
+        Args:
+            config (Dict[str, str]): the user config (usually mkdocs.yml)
+
+        Returns:
+            [Dict[str, str]]: the user config
+        """
+        # if serving, then we do not need to build the version page
         if Entry.is_serving(config['site_dir']):
             print('mkdocs is serving not building so there is no need to build the version page')
         elif self.config['version_selection_page'] is not None:
@@ -70,7 +89,13 @@ class Entry(BasePlugin):
         version(config, self.config)
         return config
 
-    def extract_version_num(self):
+    def extract_version_num(self) -> str:
+        """
+        extracts the version "number"
+
+        Returns:
+            str: returns the version number as a string
+        """
         try:
             version_num = self.config['version']
             return version_num
@@ -80,13 +105,6 @@ class Entry(BasePlugin):
                   'no version detected in mkdocs.yml.You should specify a version number (ideally) according to '
                   'semantic versioning in mkdocs.yml. exiting')
             sys.exit(1)
-
-    @staticmethod
-    def docs_exists(path):
-        if os.path.isdir(path):
-            return True
-        else:
-            return False
 
     @staticmethod
     def is_serving(site_path: str) -> bool:

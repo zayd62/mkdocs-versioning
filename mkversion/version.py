@@ -5,9 +5,18 @@ import shutil
 import yaml
 from mkdocs import config as mkconfig
 from mkdocs.commands import build
+from typing import List, Dict
 
 
-def clean_old_files(items_to_delete, built_docs_path, plugin_config):
+def clean_old_files(items_to_delete: List[str], built_docs_path: str, plugin_config: Dict[str, str]) -> None:
+    """
+    Remove the built version selector documentation
+
+    Args:
+        items_to_delete (List[str]): List of optional items to delete
+        built_docs_path (str): path to built docs
+        plugin_config (Dict[str, str]): plugin config
+    """
     with os.scandir(built_docs_path) as files:
         for f in files:
             if not f.is_dir():
@@ -16,7 +25,13 @@ def clean_old_files(items_to_delete, built_docs_path, plugin_config):
                 shutil.rmtree(f.path)
 
 
-def hide_documentation(config):
+def hide_documentation(config: Dict[str, str]) -> None:
+    """
+    Hide all the documentation in the docs_dir by adding a dot in front of the file name
+
+    Args:
+        config (Dict[str, str]): the user config
+    """
     for root, dirs, files in os.walk(config['docs_dir']):
         for name in files:
             path = pathlib.Path(os.path.join(root, name))
@@ -24,13 +39,25 @@ def hide_documentation(config):
             hide_md(path)
 
 
-def hide_md(path):
+def hide_md(path: str) -> None:
+    """
+    For a given md file, hide it by prefixing the file with a dot. e.g: index.md --> .index.md
+
+    Args:
+        path (str): path to md file
+    """
     filename = path.name
     if path.suffix == '.md':
         path.replace(path.with_name('.' + filename))
 
 
-def unhide_documentation(config):
+def unhide_documentation(config: Dict[str, str]) -> None:
+    """
+    Unhide all the documentation in the docs_dir by removing the dot in front of the filename
+
+    Args:
+        config (Dict[str, str]): the user config
+    """
     for root, dirs, files in os.walk(config['docs_dir']):
         for name in files:
             path = pathlib.Path(os.path.join(root, name))
@@ -39,12 +66,24 @@ def unhide_documentation(config):
                 unhide_md(path)
 
 
-def unhide_md(path):
+def unhide_md(path: str) -> None:
+    """
+    For a given md file, unhide it by removing the dot from the file name. e.g: .index.md --> index.md
+
+    Args:
+        path (str): path to md file
+    """
     filename = path.name.strip('.')
     path.replace(path.with_name(filename))
 
 
-def build_default_version_page(path_of_version_md):
+def build_default_version_page(path_of_version_md: str) -> None:
+    """
+    build the default version selection path
+
+    Args:
+        path_of_version_md (str): path of where the page is written to
+    """
     with open(path_of_version_md, 'w') as f:
         f.write('# Welcome to version selector')
         f.write('\n')
@@ -78,7 +117,7 @@ def version(config, plugin_config):
     # i.e. with all the built docs
     built_docs_path, tail = os.path.split(site_dir)
 
-    # clean up old files. need to do manually so that built docs are kept but
+    # clean up the old version selector page. need to do manually so that built docs are kept but
     # built docs are in folders
     # refactor https://github.com/zayd62/mkdocs-versioning/pull/45#issuecomment-605449689
     items_to_delete = ['assets', 'search']
