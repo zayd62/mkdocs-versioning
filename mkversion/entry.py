@@ -40,10 +40,17 @@ class Entry(BasePlugin):
         if not Entry.is_serving(config['site_dir']):
             config['site_dir'] = new_dir
 
+        if Entry.is_serving(config['site_dir']):
+            nav = config['nav']
+            for count, i in enumerate(nav):
+                if 'version selector' in [j.lower() for j in i.keys()]:
+                    del nav[count]
         # check if version selector is in nav
         # if not, then exit
-        if not Entry.is_version_selector_in_config(config['nav']):
-            sys.exit(2)
+
+        if not Entry.is_serving(config['site_dir']):
+            if not Entry.is_version_selector_in_config(config['nav']):
+                sys.exit(2)
 
         # check if docs for specified version in config already exists
         # if true, program should exit as docs that already exist should not have to be rebuilt
@@ -85,8 +92,11 @@ class Entry(BasePlugin):
             if os.path.exists(version_page_path_with_dot.absolute()):
                 unhide_md(version_page_path_with_dot.absolute())
 
-        # build version page
-        version(config, self.config)
+            # build version page
+            version(config, self.config)
+
+        else:
+            version(config, self.config)
         return config
 
     def extract_version_num(self) -> str:
