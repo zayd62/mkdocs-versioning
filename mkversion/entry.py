@@ -31,6 +31,11 @@ class Entry(BasePlugin):
         if not Entry.is_serving(config['site_dir']):
             config['site_dir'] = new_dir
 
+        # check if version selector is in nav
+        # if not, then exit
+        if not Entry.is_version_selector_in_config(config['nav']):
+            sys.exit(2)
+
         # check if docs for specified version in config already exists
         # if true, program should exit as docs that already exist should not have to be rebuilt
         if os.path.isdir(new_dir):
@@ -102,3 +107,24 @@ class Entry(BasePlugin):
             return False
         else:
             return True
+
+    @staticmethod
+    def is_version_selector_in_config(nav: Dict[str, str]) -> bool:
+        """
+        Check to see if the version selector is in the users config and with the appropriate value (usually, mkdocs.yml)
+
+        Args:
+            nav (Dict[str, str]): a dictionary of the user config
+
+        Returns:
+            bool: True if config contains version selector, false otherwise
+        """
+        for i in nav:
+            if 'version selector' in [j.lower() for j in i.keys()]:
+                # if true, check if the value is '../'
+                for k in i.values():
+                    if k == '../':
+                        return True
+                    else:
+                        print('Version Selector not specified correctly')
+                        return False
