@@ -8,7 +8,7 @@ This is used to deploy built docs to GitHub Pages. mkdocs has a built in command
 
 ##  Command: *`sync`* 
 
-Used to copy the built docs from GitHub pages (By defaukt, the *`gh-pages`* branch).
+Used to copy the built docs from GitHub pages (By default, the *`gh-pages`* branch).
 
 ##  Command: *`unhide`* 
 
