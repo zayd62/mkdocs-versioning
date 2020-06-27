@@ -1,3 +1,0 @@
-# Kubernetes
-
-Coming soon
