@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.3">
     
     
       
@@ -437,35 +437,34 @@
                   
                 
                 
-                <h1 id="home">Home<a class="headerlink" href="#home" title="Permanent link">&para;</a></h1>
+                <h1 id="home">Home</h1>
 <p>Welcome to mkdocs-versioning!</p>
 <p>mkdocs-versioning is a tool that allows you to version documentation built using <a href="https://github.com/mkdocs/mkdocs/">mkdocs</a> allowing users to access historical versions of documentation. mkdocs-versioning works by building each documentation version into its own folder and having a central, continuously updating <em><code>version selection page</code></em> which points to each version built. </p>
-<h2 id="design">Design<a class="headerlink" href="#design" title="Permanent link">&para;</a></h2>
+<h2 id="design">Design</h2>
 <p>mkdocs-versioning is designed with the following principles in mind:</p>
 <ol>
 <li><strong>Theme agnostic</strong>: The plugin should work with any mkdocs theme. mkdocs-versioning takes advantage of the navigation links to implement versioning. </li>
 <li><strong>Strict versioning</strong>: Once a documentation is built, it should <strong>NOT</strong> be overwritten. mkdocs-versioning uses a centralised, continuously updated version selection page which then, using the navigation links, point to built docs. The built docs then have a <strong>relative link</strong> which then points to the version selection page.</li>
 <li><strong>Stateless</strong>: Stateless means that no extra information is stored anywhere in order for the plugin to work. All the plugin needs is the previously built docs, a <strong>new</strong> version number and it can build the new docs and the version selection page.</li>
 </ol>
-<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<h2 id="install">Install</h2>
 <p>It is <strong>highly</strong> recommended that you use Python <a href="https://docs.python.org/3/tutorial/venv.html">Virtual Environments</a> so not pollute your system install of Python. Once you create and activate your python environment, use <code>pip</code> to install the plugin. Requires Python version &#8805; 3.6.</p>
-<div class="highlight"><pre><span></span><code>pip install mkdocs
+<pre><code class="bash">pip install mkdocs
 pip install mkdocs-versioning
-</code></pre></div>
+</code></pre>
 
-<details class="tip" open="open"><summary>Tip</summary><p>An alternative for managing Virtual Environments is <a href="https://www.anaconda.com/products/individual">Anaconda Navigator</a> which provides a nice GUI for managing python virtual environments.</p>
-</details>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<p>???+ tip
+    An alternative for managing Virtual Environments is <a href="https://www.anaconda.com/products/individual">Anaconda Navigator</a> which provides a nice GUI for managing python virtual environments.</p>
+<h2 id="setup">Setup</h2>
 <p>Once install is complete, use <code>mkdocs new .</code> to create an empty mkdocs project. You should then have an <code>mkdocs.yml</code> file as well as a <code>docs/</code> directory. Now setup <code>mkdocs.yml</code> as shown below (<strong>Note</strong>: You can add more to the config if you wish. This is just the minimum):</p>
-<details class="example" open="open"><summary>Example</summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
-<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
-    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3.0</span>
-<span class="nt">nav</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">Home</span><span class="p">:</span> <span class="s">&quot;index.md&quot;</span>
-  <span class="p p-Indicator">-</span> <span class="nt">Version Selector</span><span class="p">:</span> <span class="s">&quot;../&quot;</span>
-</code></pre></div>
-
-</details>
+<p>???+ example
+    <code>yaml
+    plugins:
+    - mkdocs-versioning:
+        version: 0.3.0
+    nav:
+      - Home: "index.md"
+      - Version Selector: "../"</code></p>
 <p>Write your documentation as normal using <code>mkdocs serve</code> to preview your docs as normal. When you run <code>mkdocs build</code>, the plugin will:</p>
 <ol>
 <li>Build your docs into a folder within <code>site/</code> and will be named according to the value of <code>version</code> (in the example, the docs will be built into <code>site/0.3.0/</code>).</li>
@@ -473,8 +472,8 @@ pip install mkdocs-versioning
 <li>Inside <code>site/</code> build a new version selection page.</li>
 </ol>
 <p>Now when you want to build a new version, simply change the value of <code>version</code> (e.g. to 0.4.0) and build again, mkdocs should build the new, updated docs into its own folder and update the version selection page.</p>
-<details class="info" open="open"><summary>Info</summary><p>This is just a basic working example, there is more functionality built into the docs such as a having a custom version selection page so it is recommended to read through the entire <a href="reference/">details section</a> to get a full understanding of how the plugin works in order to take full advantage of the versioning capabilities.</p>
-</details>
+<p>???+ Info
+    This is just a basic working example, there is more functionality built into the docs such as a having a custom version selection page so it is recommended to read through the entire <a href="reference/">details section</a> to get a full understanding of how the plugin works in order to take full advantage of the versioning capabilities.</p>
                 
                   
                     
@@ -541,14 +540,14 @@ pip install mkdocs-versioning
     </div>
     
       <script src="assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="assets/javascripts/bundle.5532dfb7.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="assets/javascripts/bundle.4a5ba8d6.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: ".",
           features: ["tabs"],
           search: Object.assign({
-            worker: "assets/javascripts/worker/search.7a2ea5ba.min.js"
+            worker: "assets/javascripts/worker/search.9b3611bd.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

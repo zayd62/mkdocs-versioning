@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../../images/favicon.svg">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.3">
     
     
       
@@ -441,32 +441,29 @@
                   
                 
                 
-                <h1 id="config-options">Config Options<a class="headerlink" href="#config-options" title="Permanent link">&para;</a></h1>
+                <h1 id="config-options">Config Options</h1>
 <p>This page will go into more detail on the available config options that this plugin provides. </p>
-<h2 id="option-version">Option: <em><code>version</code></em><a class="headerlink" href="#option-version" title="Permanent link">&para;</a></h2>
+<h2 id="option-version">Option: <em><code>version</code></em></h2>
 <p>This is a <strong>REQUIRED</strong> option. This lets the plugin know what version the docs belong to. It is recommended that you use <a href="https://semver.org/">semantic versioning</a> but any versioning scheme works. The versions are parsed as type <em><code>str</code></em> and is sorted alphabetically in descending order. </p>
-<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em></summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
-<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
-    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3.0</span>
-</code></pre></div>
-
-</details>
-<h2 id="option-exclude_from_nav">Option: <em><code>exclude_from_nav</code></em><a class="headerlink" href="#option-exclude_from_nav" title="Permanent link">&para;</a></h2>
+<p>???+ example "Example <em><code>mkdocs.yml</code></em>"
+    <code>yaml
+    plugins:
+    - mkdocs-versioning:
+        version: 0.3.0</code></p>
+<h2 id="option-exclude_from_nav">Option: <em><code>exclude_from_nav</code></em></h2>
 <p>This is a <strong>OPTIONAL</strong> option. This lets the plugin know what version the docs belong to. The value should be a list of paths from the <em><code>docs</code></em> directory.</p>
-<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em></summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
-<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
-    <span class="nt">exclude_from_nav</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;images&quot;</span><span class="p p-Indicator">]</span>
-</code></pre></div>
-
-</details>
-<h2 id="option-version_selection_page">Option: <em><code>version_selection_page</code></em><a class="headerlink" href="#option-version_selection_page" title="Permanent link">&para;</a></h2>
+<p>???+ example "Example <em><code>mkdocs.yml</code></em>"
+    <code>yaml
+    plugins:
+    - mkdocs-versioning:
+        exclude_from_nav: ["images"]</code></p>
+<h2 id="option-version_selection_page">Option: <em><code>version_selection_page</code></em></h2>
 <p>This is a <strong>OPTIONAL</strong> option. This lets the plugin know if there is a custom version selection page and to use rather than the default. The markdown file should be located in the <em><code>docs</code></em> directory</p>
-<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em></summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
-<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
-    <span class="nt">version_selection_page</span><span class="p">:</span> <span class="s">&quot;version_page.md&quot;</span>
-</code></pre></div>
-
-</details>
+<p>???+ example "Example <em><code>mkdocs.yml</code></em>"
+    <code>yaml
+    plugins:
+    - mkdocs-versioning:
+        version_selection_page: "version_page.md"</code></p>
                 
                   
                     
@@ -547,14 +544,14 @@
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.5532dfb7.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.4a5ba8d6.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: ["tabs"],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.7a2ea5ba.min.js"
+            worker: "../../assets/javascripts/worker/search.9b3611bd.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
