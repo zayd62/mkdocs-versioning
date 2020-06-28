@@ -1,9 +1,93 @@
 import os
+import pathlib
 import shutil
-import subprocess
-import tempfile
 
 import yaml
+from mkdocs import config as mkconfig
+from mkdocs.commands import build
+from typing import List, Dict
+
+
+def clean_old_files(items_to_delete: List[str], built_docs_path: str, plugin_config: Dict[str, str]) -> None:
+    """
+    Remove the built version selector documentation
+
+    Args:
+        items_to_delete (List[str]): List of optional items to delete
+        built_docs_path (str): path to built docs
+        plugin_config (Dict[str, str]): plugin config
+    """
+    with os.scandir(built_docs_path) as files:
+        for f in files:
+            if not f.is_dir():
+                os.remove(f.path)
+            elif f.name in items_to_delete or f.name in plugin_config['exclude_from_nav']:
+                shutil.rmtree(f.path)
+
+
+def hide_documentation(config: Dict[str, str]) -> None:
+    """
+    Hide all the documentation in the docs_dir by adding a dot in front of the file name
+
+    Args:
+        config (Dict[str, str]): the user config
+    """
+    for root, dirs, files in os.walk(config['docs_dir']):
+        for name in files:
+            path = pathlib.Path(os.path.join(root, name))
+            # add "." to the md file
+            hide_md(path)
+
+
+def hide_md(path: str) -> None:
+    """
+    For a given md file, hide it by prefixing the file with a dot. e.g: index.md --> .index.md
+
+    Args:
+        path (str): path to md file
+    """
+    filename = path.name
+    if path.suffix == '.md':
+        path.replace(path.with_name('.' + filename))
+
+
+def unhide_documentation(config: Dict[str, str]) -> None:
+    """
+    Unhide all the documentation in the docs_dir by removing the dot in front of the filename
+
+    Args:
+        config (Dict[str, str]): the user config
+    """
+    for root, dirs, files in os.walk(config['docs_dir']):
+        for name in files:
+            path = pathlib.Path(os.path.join(root, name))
+            # remove "." from the md file
+            if path.suffix == '.md':
+                unhide_md(path)
+
+
+def unhide_md(path: str) -> None:
+    """
+    For a given md file, unhide it by removing the dot from the file name. e.g: .index.md --> index.md
+
+    Args:
+        path (str): path to md file
+    """
+    filename = path.name.strip('.')
+    path.replace(path.with_name(filename))
+
+
+def build_default_version_page(path_of_version_md: str) -> None:
+    """
+    build the default version selection path
+
+    Args:
+        path_of_version_md (str): path of where the page is written to
+    """
+    with open(path_of_version_md, 'w') as f:
+        f.write('# Welcome to version selector')
+        f.write('\n')
+        f.write('Use the navigation items to select the version of the docs you want to see.')
 
 
 def version(config, plugin_config):
@@ -26,69 +110,53 @@ def version(config, plugin_config):
     inyaml = yaml.safe_load(infile)
     infile.close()
 
-    # open config file for writing
-    outfile = open('mkdocs.test.yml', 'w')
-
     # change sitename so that the version number is replaced with the string "Version Page"
     site_name = site_name.replace(version_num, 'Version Page')
 
     # calculate where the built version page should be stored.
     # i.e. with all the built docs
-    head, tail = os.path.split(site_dir)
-    built_docs_path = head
+    built_docs_path, tail = os.path.split(site_dir)
 
-    # clean up old files. need to do manually so that built docs are kept but
+    # clean up the old version selector page. need to do manually so that built docs are kept but
     # built docs are in folders
     # refactor https://github.com/zayd62/mkdocs-versioning/pull/45#issuecomment-605449689
-    item_to_delete = ['assets', 'search']
-    with os.scandir(built_docs_path) as files:
-        for f in files:
-            if not f.is_dir():
-                os.remove(f.path)
-            elif f.name in item_to_delete:
-                shutil.rmtree(f.path)
+    items_to_delete = ['assets', 'search']
+    clean_old_files(items_to_delete, built_docs_path, plugin_config)
 
     # find the built docs and sort them in order and reverse them
-    built_docs = sorted(os.listdir(head))
-    built_docs.reverse()
+    built_docs_list = sorted(os.listdir(built_docs_path))
+    built_docs_list.reverse()
 
+    # in order to fix issue #48 (https://github.com/zayd62/mkdocs-versioning/issues/48)
+    # rename the original md files to have a "." so it is ignored when version selection page is built
+    hide_documentation(config)
+    version_page_name = 'index.md'
+    # build default version page
+    if plugin_config['version_selection_page'] is None:
+        path_of_version_md = os.path.join(config['docs_dir'], version_page_name)
+        build_default_version_page(path_of_version_md)
+    else:
+        # build custom version page
+        custom_version_path = pathlib.Path(plugin_config['version_selection_page'])
+        unhide_md(custom_version_path.with_name('.' + custom_version_path.name))
+        custom_version_path.replace(custom_version_path.with_name('index.md'))
     # take list of built docs and create nav item
     nav = []
-
-    # creating tempdir to be docs_dir
-    tempdir = tempfile.mkdtemp()
-
-    # set docs_dir to tempdir
-    inyaml['docs_dir'] = tempdir
-
-
-    # test.pypi does not upload version.md so it needs to be manually created
-    path_of_version_md = os.path.join(tempdir, 'index.md')
-    with open(path_of_version_md, 'w') as f:
-        f.write('# Welcome to version selector')
-        f.write('\n')
-        f.write('Use the navigation items to select the version of the docs you want to see.')
-
-
-    config_path = os.path.realpath(outfile.name)
-    homedict = {'Home': 'index.md'}
+    homedict = {'Home': version_page_name}
     nav.append(homedict)
 
     # building paths for each version
-    version_path_pair = []
-    for i in built_docs:
+    for i in built_docs_list:
         nav_item = {}
         nav_item[i] = i + '/'
-        version_path_pair.append(nav_item)
-    versiondict = {'Version Select': version_path_pair}
-    nav.append(versiondict)
+        nav.append(nav_item)
 
-    # remove mkdocs versioning plugin
+    # remove mkdocs versioning plugin from version config
     for j in inyaml['plugins']:
         if 'mkdocs-versioning' in j:
             inyaml['plugins'].remove(j)
 
-    # if there are no plugins left installed, remove the plugin config otherwise errors will occur
+    # if there are no plugins left installed, remove the plugin from version config otherwise errors will occur
     if len(inyaml['plugins']) <= 0:
         del inyaml['plugins']
 
@@ -101,16 +169,24 @@ def version(config, plugin_config):
     # replace site_name
     inyaml['site_name'] = site_name
 
-    # write config file
-    yaml.dump(inyaml, outfile, default_flow_style=False)
-    outfile.close()
+    # open config file for writing
+    with open('mkdocs.version.yml', 'w') as version_config:
+        yaml.dump(inyaml, version_config, default_flow_style=False)
 
-    # run mkdocs build
-    subprocess.run(['mkdocs', 'build', '--dirty',
-                    '--config-file', config_path])
+    # perform version build
+    with open(os.path.realpath(version_config.name), 'rb') as cnfg_file:
+        built_config = mkconfig.load_config(cnfg_file)
+        build.build(built_config, dirty=True)
 
-    # delete tempdir
-    shutil.rmtree(tempdir)
+    # delete version config
+    os.remove(os.path.realpath(version_config.name))
 
-    # delete outfile
-    os.remove(config_path)
+    # rename the custom version selection page if specified otherwise delete the version selection page
+    if plugin_config['version_selection_page'] is not None:
+        pth = pathlib.Path(os.path.join(config['docs_dir'], 'index.md'))
+        pth.replace(custom_version_path)
+    else:
+        os.remove(os.path.join(config['docs_dir'], 'index.md'))
+
+    # unhide original documentation
+    unhide_documentation(config)

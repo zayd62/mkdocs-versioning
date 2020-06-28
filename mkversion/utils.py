@@ -1,9 +1,11 @@
-import subprocess
-import tempfile
 import os
 import shutil
-from mkdocs.commands import gh_deploy
+import subprocess
+import tempfile
+
 from mkdocs import config, exceptions
+from mkdocs.commands import gh_deploy
+from mkversion.version import unhide_documentation
 
 
 def deploy(args):
@@ -57,3 +59,14 @@ def sync(args):
             for i in files:
                 print(i.name, i.path)
                 shutil.move(i.path, cfg['site_dir'])
+
+
+def unhide_docs(args):
+    """
+    Unhide documentation
+
+    Args:
+        args (argparse.Namespace): A Namespace object contaning all the command line arguments
+    """
+    docs_path = {'docs_dir': args.path}
+    unhide_documentation(docs_path)
