@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="mkdocs-versioning",
-    version="0.2.1",
+    version="0.3.0",
     author="Zayd Patel",
     author_email="zayd62@gmail.com",
     description="A tool that allows for versioning sites built with mkdocs",
