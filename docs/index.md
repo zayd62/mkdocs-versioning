@@ -1,77 +1,51 @@
-Welcome to mkdocs-versioning
-============================
+# Home
 
-mkdocs-versioning is a plugin for [mkdocs](https://www.mkdocs.org/), a
-tool designed to create static websites usually for generating project
-documentation. mkdocs-versioning extends mkdocs by differentiating
-between different versions of documentation you may build. For example,
-a newer versions of some software may work differently from an older
-version and it is important that users of an older version of the
-software reads the appropriate version of the documentation in order to
-ensure that the user has the correct information and uses the software
-appropriately.
+Welcome to mkdocs-versioning!
 
-How does it work
-----------------
+mkdocs-versioning is a tool that allows you to version documentation built using [mkdocs](https://github.com/mkdocs/mkdocs/) allowing users to access historical versions of documentation. mkdocs-versioning works by building each documentation version into its own folder and having a central, continuously updating *`version selection page`* which points to each version built. 
 
-It works by letting mkdocs build the site normally but builds it into a
-folder representing the version the software is assigned (e.g. version
-`1.0.0` of the software will be built into a folder labelled `1.0.0`).
-The building of the docs is slightly different than usual as there will
-be a nav item in ```mkdocs.yml``` called ```Version: ‘../’```. Clicking this will cause
-the web browser to move up a directory which will contain an
-automatically generated page (built using mkdocs) with links to all the
-other versions of the documentation built. The directory structure will
-look something like this:
+## Design
 
-!!! example
+mkdocs-versioning is designed with the following principles in mind:
 
-    ```    
-        ├── 1.0.0
-        │   ├── 404.html
-        │   ├── assets
-        │   ├── circle
-        │   ├── index.html
-        │   ├── search
-        │   ├── sitemap.xml
-        │   └── sitemap.xml.gz
-        ├── 1.1.0
-        │   ├── 404.html
-        │   ├── assets
-        │   ├── circle
-        │   ├── index.html
-        │   ├── search
-        │   ├── sitemap.xml
-        │   ├── sitemap.xml.gz
-        │   └── triangle
-        ├── 2.0.0
-        │   ├── 404.html
-        │   ├── assets
-        │   ├── circle
-        │   ├── index.html
-        │   ├── quadrilateral
-        │   ├── search
-        │   ├── sitemap.xml
-        │   ├── sitemap.xml.gz
-        │   └── triangle
-        ├── 404.html
-        ├── assets
-        │   ├── fonts
-        │   ├── images
-        │   ├── javascripts
-        │   └── stylesheets
-        ├── index.html [1]
-        ├── search
-        │   └── search_index.json
-        ├── sitemap.xml
-        └── sitemap.xml.gz 
+1. **Theme agnostic**: The plugin should work with any mkdocs theme. mkdocs-versioning takes advantage of the navigation links to implement versioning. 
+2. **Strict versioning**: Once a documentation is built, it should **NOT** be overwritten. mkdocs-versioning uses a centralised, continuously updated version selection page which then, using the navigation links, point to built docs. The built docs then have a **relative link** which then points to the version selection page.
+3. **Stateless**: Stateless means that no extra information is stored anywhere in order for the plugin to work. All the plugin needs is the previously built docs, a **new** version number and it can build the new docs and the version selection page.
+
+
+## Install
+
+It is **highly** recommended that you use Python [Virtual Environments](https://docs.python.org/3/tutorial/venv.html) so not pollute your system install of Python. Once you create and activate your python environment, use `pip` to install the plugin. Requires Python version &#8805; 3.6.
+
+```bash
+pip install mkdocs
+pip install mkdocs-versioning
+```
+
+???+ tip
+    An alternative for managing Virtual Environments is [Anaconda Navigator](https://www.anaconda.com/products/individual) which provides a nice GUI for managing python virtual environments.
+
+## Setup
+
+Once install is complete, use `mkdocs new .` to create an empty mkdocs project. You should then have an `mkdocs.yml` file as well as a `docs/` directory. Now setup `mkdocs.yml` as shown below (**Note**: You can add more to the config if you wish. This is just the minimum):
+
+???+ example
+    ```yaml
+    plugins:
+    - mkdocs-versioning:
+        version: 0.3.0
+    nav:
+      - Home: "index.md"
+      - Version Selector: "../"
     ```
 
-This will generate a version selection page with links to version `1.0.0`, `1.1.0` and `2.0.0` of software documentation.
-An example version of a built site can be found [here](https://zayd62.github.io/mkdocs-versioning-test/)
+Write your documentation as normal using `mkdocs serve` to preview your docs as normal. When you run `mkdocs build`, the plugin will:
 
-!!! note
-    **[1]** (the index page in the example above) will contain a single page with links to all versions of the docs that 
-    you have built and likewise, all docs that you have built will have link a link to **[1]**
+1. Build your docs into a folder within `site/` and will be named according to the value of `version` (in the example, the docs will be built into `site/0.3.0/`).
+2. Remove the old version selection page.
+3. Inside `site/` build a new version selection page.
 
+Now when you want to build a new version, simply change the value of `version` (e.g. to 0.4.0) and build again, mkdocs should build the new, updated docs into its own folder and update the version selection page.
 
+???+ Info
+    This is just a basic working example, there is more functionality built into the docs such as a having a custom version selection page so it is recommended to read through the entire [details section](reference/index.md) to get a full understanding of how the plugin works in order to take full advantage of the versioning capabilities.

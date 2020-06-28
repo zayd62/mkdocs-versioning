@@ -1,22 +1,55 @@
-site_name: mkdocs-versioning
-repo_url: 'https://github.com/zayd62/mkdocs-versioning'
-repo_name: 'zayd62/mkdocs-versioning'
-theme: 'material'
-edit_uri: ''
+# Project information
+site_name: "mkdocs-versioning"
+site_description: "Documentation for mkdocs-versioning plugin"
+
 plugins:
   - search
+  - git-revision-date-localized:
+      type: datetime
   - mkdocs-versioning:
-      version: 0.1.0
+      version: 0.3.0
+      exclude_from_nav: ["images"]
+
+# Repository
+repo_name: "mkdocs-versioning"
+repo_url: "https://github.com/zayd62/mkdocs-versioning"
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+  features:
+    - tabs
+  icon:
+    logo: octicons/versions-24
+  favicon: images/favicon.svg
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+nav:
+  - Home: "index.md"
+  - Detail:
+      - How it works: "reference/index.md"
+      - Step by Step Example: "reference/step_by_step.md"
+      - Config Options: "reference/config_options.md"
+      - CLI Options: "reference/cli.md"
+  - Version Selector: "../"
+
 markdown_extensions:
   - admonition
-  - pymdownx.details
-  - pymdownx.superfences
   - codehilite:
       guess_lang: false
+      linenums: true
   - toc:
       permalink: true
-nav:
-  - Home : 'index.md'
-  - Getting Started: 'Getting Started.md'
-  - CLI Commands: 'CLI commands.md'
-  - Version: '../'
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed

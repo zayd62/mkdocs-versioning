@@ -7,5 +7,20 @@
     ],
     "python.pythonPath": "/home/zayd/anaconda3/envs/mkdocs-versioning/bin/python",
     "python.linting.pylamaEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true,
+    "cSpell.ignoreWords": [
+        "headerlink",
+        "roboto",
+        "stylesheets"
+    ]
 }

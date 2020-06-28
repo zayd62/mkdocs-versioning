@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="mkdocs-versioning",
-    version="0.2.0",
+    version="0.3.0",
     author="Zayd Patel",
     author_email="zayd62@gmail.com",
     description="A tool that allows for versioning sites built with mkdocs",
@@ -20,9 +20,6 @@ setuptools.setup(
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         "Programming Language :: Python :: Implementation :: CPython",
@@ -36,7 +33,7 @@ setuptools.setup(
             'mkdocs-versioning = mkversion.entry:Entry',
         ]
     },
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     project_urls={
         'Documentation': 'https://zayd62.github.io/mkdocs-versioning/'
     },
