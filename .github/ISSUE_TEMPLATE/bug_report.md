@@ -34,5 +34,9 @@ If applicable, add screenshots to help explain your problem.
  - Browser [e.g. stock browser, safari]
  - Version [e.g. 22]
 
+**pip freeze**
+
+Please provide the output when running ```pip freeze```. This is to help diagnose if the bug is related to packages that mkdocs-versioning depends on. It is generally good practice to use [Python Virtual Environment](https://docs.python.org/3/tutorial/venv.html) when installing external packages
+
 **Additional context**
 Add any other context about the problem here.
