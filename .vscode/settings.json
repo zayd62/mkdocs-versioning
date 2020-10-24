@@ -5,7 +5,7 @@
     "python.formatting.autopep8Args": [
         "--max-line-length=200"
     ],
-    "python.pythonPath": "/home/zayd/anaconda3/envs/mkdocs-versioning/bin/python",
+    "python.pythonPath": "/Users/zaydpatel/opt/anaconda3/envs/mkdocs-versioning/bin/python",
     "python.linting.pylamaEnabled": true,
     "python.linting.enabled": true,
     "python.testing.unittestArgs": [

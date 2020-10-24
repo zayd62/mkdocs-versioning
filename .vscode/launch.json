@@ -5,13 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Module",
+            "name": "CLI: mkdocs build",
             "type": "python",
             "request": "launch",
             "module": "mkdocs",
-            "args": ["build"],
+            "args": [
+                "build"
+            ],
             "justMyCode": true,
-            
+        },
+        {
+            "name": "CLI: mkdocs-versioning sync",
+            "type": "python",
+            "request": "launch",
+            "module": "mkversion",
+            "args": [
+                "sync"
+            ],
+            "justMyCode": true,
+            "preLaunchTask": "mkdocs-versioning_sync_pre-debug"
         }
     ]
 }
