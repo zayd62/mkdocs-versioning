@@ -1,6 +1,7 @@
 import os
 import pathlib
 import sys
+import tempfile
 from typing import Dict
 
 from mkdocs.config import config_options
@@ -129,12 +130,12 @@ class Entry(BasePlugin):
             bool -- true if serving, false otherwise
         """
 
-        # if mkdocs is serving, the string "tmp" will be in the path
-        # str.find('tmp') will return -1 if "tmp" is NOT FOUND
-        if site_path.find('tmp') == -1:
-            return False
-        else:
+        # to calulate if the site_path is a temporary directory, we use a builtin function in the tempfile module
+        # this returns the name of the directory used for temporary file which mkdocs uses
+        if tempfile.gettempdir() in site_path:
             return True
+        else:
+            return False
 
     @staticmethod
     def is_version_selector_in_config(nav: Dict[str, str]) -> bool:
