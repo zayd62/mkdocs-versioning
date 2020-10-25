@@ -124,7 +124,7 @@
     
       <div class="md-header-nav__source">
         
-<a href="https://github.com/zayd62/mkdocs-versioning/" title="Go to repository" class="md-source">
+<a href="https://github.com/zayd62/mkdocs-versioning" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
@@ -202,7 +202,7 @@
   
     <div class="md-nav__source">
       
-<a href="https://github.com/zayd62/mkdocs-versioning/" title="Go to repository" class="md-source">
+<a href="https://github.com/zayd62/mkdocs-versioning" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
@@ -433,90 +433,92 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/zayd62/mkdocs-versioning/edit/master/docs/reference/step_by_step.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
                 
                   
                 
                 
-                <h1 id="how-to-use">How to Use</h1>
+                <h1 id="how-to-use">How to Use<a class="headerlink" href="#how-to-use" title="Permanent link">&para;</a></h1>
 <p>This page is intended to be a step by step walkthrough on how to use this plugin in a typical environment. This will go through all the available config options as well as CLI commands available when you install this plugin. </p>
-<h2 id="version-010">Version 0.1.0</h2>
+<h2 id="version-010">Version 0.1.0<a class="headerlink" href="#version-010" title="Permanent link">&para;</a></h2>
 <p>Lets say, you are building a shape library. <code>version 0.1.0</code>  of the documentation is for circles. You want a custom version selection page and you have an <code>images</code> directory for images to be used for your docs which needs to be excluded from the version selection page nav (see <a href="../#21-why-exclude_from_nav-option">here</a> as to why). Your <em><code>mkdocs.yml</code></em> will look something like this:</p>
-<p>???+ example "Example <em><code>mkdocs.yml</code></em> for version 0.1.0"
-    <code>yaml
-    plugins:
-    - mkdocs-versioning:
-        version: 0.1.0
-        exclude_from_nav: ["images"]
-        version_selection_page: "version_selection.md"
-    nav:
-      - Home: "index.md"
-      - Circle: "circle.md"
-      - Version Selector: "../"</code></p>
+<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em> for version 0.1.0</summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1.0</span>
+    <span class="nt">exclude_from_nav</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;images&quot;</span><span class="p p-Indicator">]</span>
+    <span class="nt">version_selection_page</span><span class="p">:</span> <span class="s">&quot;version_selection.md&quot;</span>
+<span class="nt">nav</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Home</span><span class="p">:</span> <span class="s">&quot;index.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Circle</span><span class="p">:</span> <span class="s">&quot;circle.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Version Selector</span><span class="p">:</span> <span class="s">&quot;../&quot;</span>
+</code></pre></div>
+
+</details>
 <p>When you run <em><code>mkdocs build</code></em>, your <em><code>site</code></em> directory looks something like this:</p>
-<p>???+ example "Example <em><code>site</code></em> directory for version 0.1.0"
-    <code>yaml
-    .
-    ├── 0.1.0
-    │   ├── ...
-    ├── ...</code></p>
+<details class="example" open="open"><summary>Example <em><code>site</code></em> directory for version 0.1.0</summary><div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">├── 0.1.0</span>
+<span class="l l-Scalar l-Scalar-Plain">│</span><span class="err">  </span><span class="l l-Scalar l-Scalar-Plain"> ├── ...</span>
+<span class="l l-Scalar l-Scalar-Plain">├── ...</span>
+</code></pre></div>
+
+</details>
 <p>You then deploy the built docs to <strong>GitHub Pages</strong> using the command <em><code>mkdocs-versioning deploy</code></em>. See <a href="../cli/#command-deploy">here</a> as to why this plugin has its own deploy command. </p>
-<p>???+ warning
-    The <em><code>site</code></em> directory should <strong>NOT</strong> be pushed to any GIT remotes (e.g. GitHub, GitLab, BitBucket etc) and should be ignored using <em><code>.gitignore</code></em> file.</p>
-<h2 id="version-020">Version 0.2.0</h2>
+<details class="warning" open="open"><summary>Warning</summary><p>The <em><code>site</code></em> directory should <strong>NOT</strong> be pushed to any GIT remotes (e.g. GitHub, GitLab, BitBucket etc) and should be ignored using <em><code>.gitignore</code></em> file.</p>
+</details>
+<h2 id="version-020">Version 0.2.0<a class="headerlink" href="#version-020" title="Permanent link">&para;</a></h2>
 <p>The next version of the documentation you add documentation for triangles. The updated <em><code>mkdocs.yml</code></em> will look like the following:</p>
-<p>???+ example "Example <em><code>mkdocs.yml</code></em> for version 0.2.0"
-    <code>yaml
-    plugins:
-    - mkdocs-versioning:
-        version: 0.2.0
-        exclude_from_nav: ["images"]
-        version_selection_page: "version_selection.md"
-    nav:
-      - Home: "index.md"
-      - Circle: "circle.md"
-      - Triangle: "triangle.md"
-      - Version Selector: "../"</code></p>
+<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em> for version 0.2.0</summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.2.0</span>
+    <span class="nt">exclude_from_nav</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;images&quot;</span><span class="p p-Indicator">]</span>
+    <span class="nt">version_selection_page</span><span class="p">:</span> <span class="s">&quot;version_selection.md&quot;</span>
+<span class="nt">nav</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Home</span><span class="p">:</span> <span class="s">&quot;index.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Circle</span><span class="p">:</span> <span class="s">&quot;circle.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Triangle</span><span class="p">:</span> <span class="s">&quot;triangle.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Version Selector</span><span class="p">:</span> <span class="s">&quot;../&quot;</span>
+</code></pre></div>
+
+</details>
 <p>When you run <em><code>mkdocs build</code></em>, your <em><code>site</code></em> directory now looks something like this:</p>
-<p>???+ example "Example <em><code>site</code></em> directory for version 0.2.0"
-    <code>yaml
-    .
-    ├── 0.1.0
-    │   ├── ...
-    ├── 0.2.0
-    │   ├── ...
-    ├── ...</code></p>
+<details class="example" open="open"><summary>Example <em><code>site</code></em> directory for version 0.2.0</summary><div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">├── 0.1.0</span>
+<span class="l l-Scalar l-Scalar-Plain">│</span><span class="err">  </span><span class="l l-Scalar l-Scalar-Plain"> ├── ...</span>
+<span class="l l-Scalar l-Scalar-Plain">├── 0.2.0</span>
+<span class="l l-Scalar l-Scalar-Plain">│</span><span class="err">  </span><span class="l l-Scalar l-Scalar-Plain"> ├── ...</span>
+<span class="l l-Scalar l-Scalar-Plain">├── ...</span>
+</code></pre></div>
+
+</details>
 <p>You then deploy the built docs to <strong>GitHub Pages</strong> using the command <em><code>mkdocs-versioning deploy</code></em>. </p>
-<h2 id="version-030">Version 0.3.0</h2>
+<h2 id="version-030">Version 0.3.0<a class="headerlink" href="#version-030" title="Permanent link">&para;</a></h2>
 <p>The next version of the documentation you add documentation for quadrilateral but, you move to a new computer You perform a <em><code>git clone</code></em> to get a local copy of the repository from your remote but your <em><code>site</code></em> directory is empty since the site is not pushed to the remote (and should not be). You can use <em><code>mkdocs-versioning sync</code></em> which will copy the built docs from GitHub Pages into your <em><code>site</code></em> directory. The <em><code>site</code></em> directory should look exactly the same as the example <em><code>site</code></em> directory for version 0.2.0. </p>
 <p>Once you have a copy of your built docs, your updated <em><code>mkdocs.yml</code></em> will look like the following:</p>
-<p>???+ example "Example <em><code>mkdocs.yml</code></em> for version 0.3.0"
-    <code>yaml
-    plugins:
-    - mkdocs-versioning:
-        version: 0.3.0
-        exclude_from_nav: ["images"]
-        version_selection_page: "version_selection.md"
-    nav:
-      - Home: "index.md"
-      - Circle: "circle.md"
-      - Triangle: "triangle.md"
-      - Quadrilateral: "quadrilateral.md
-      - Version Selector: "../"</code></p>
+<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em> for version 0.3.0</summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3.0</span>
+    <span class="nt">exclude_from_nav</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;images&quot;</span><span class="p p-Indicator">]</span>
+    <span class="nt">version_selection_page</span><span class="p">:</span> <span class="s">&quot;version_selection.md&quot;</span>
+<span class="nt">nav</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Home</span><span class="p">:</span> <span class="s">&quot;index.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Circle</span><span class="p">:</span> <span class="s">&quot;circle.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Triangle</span><span class="p">:</span> <span class="s">&quot;triangle.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Quadrilateral</span><span class="p">:</span> <span class="s">&quot;quadrilateral.md</span>
+  <span class="s">-</span><span class="nv"> </span><span class="s">Version</span><span class="nv"> </span><span class="s">Selector:</span><span class="nv"> </span><span class="s">&quot;</span><span class="l l-Scalar l-Scalar-Plain">../&quot;</span>
+</code></pre></div>
+
+</details>
 <p>When you run <em><code>mkdocs build</code></em>, your <em><code>site</code></em> directory now looks something like this:</p>
-<p>???+ example "Example <em><code>site</code></em> directory for version 0.3.0"
-    <code>yaml
-    .
-    ├── 0.1.0
-    │   ├── ...
-    ├── 0.2.0
-    │   ├── ...
-    ├── 0.3.0
-    │   ├── ...
-    ├── ...</code></p>
+<details class="example" open="open"><summary>Example <em><code>site</code></em> directory for version 0.3.0</summary><div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">├── 0.1.0</span>
+<span class="l l-Scalar l-Scalar-Plain">│</span><span class="err">  </span><span class="l l-Scalar l-Scalar-Plain"> ├── ...</span>
+<span class="l l-Scalar l-Scalar-Plain">├── 0.2.0</span>
+<span class="l l-Scalar l-Scalar-Plain">│</span><span class="err">  </span><span class="l l-Scalar l-Scalar-Plain"> ├── ...</span>
+<span class="l l-Scalar l-Scalar-Plain">├── 0.3.0</span>
+<span class="l l-Scalar l-Scalar-Plain">│</span><span class="err">  </span><span class="l l-Scalar l-Scalar-Plain"> ├── ...</span>
+<span class="l l-Scalar l-Scalar-Plain">├── ...</span>
+</code></pre></div>
+
+</details>
 <p>You then deploy the built docs to <strong>GitHub Pages</strong> using the command <em><code>mkdocs-versioning deploy</code></em>.</p>
                 
                   

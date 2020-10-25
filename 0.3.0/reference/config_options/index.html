@@ -124,7 +124,7 @@
     
       <div class="md-header-nav__source">
         
-<a href="https://github.com/zayd62/mkdocs-versioning/" title="Go to repository" class="md-source">
+<a href="https://github.com/zayd62/mkdocs-versioning" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
@@ -202,7 +202,7 @@
   
     <div class="md-nav__source">
       
-<a href="https://github.com/zayd62/mkdocs-versioning/" title="Go to repository" class="md-source">
+<a href="https://github.com/zayd62/mkdocs-versioning" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
@@ -433,37 +433,36 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/zayd62/mkdocs-versioning/edit/master/docs/reference/config_options.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
                 
                   
                 
                 
-                <h1 id="config-options">Config Options</h1>
+                <h1 id="config-options">Config Options<a class="headerlink" href="#config-options" title="Permanent link">&para;</a></h1>
 <p>This page will go into more detail on the available config options that this plugin provides. </p>
-<h2 id="option-version">Option: <em><code>version</code></em></h2>
+<h2 id="option-version">Option: <em><code>version</code></em><a class="headerlink" href="#option-version" title="Permanent link">&para;</a></h2>
 <p>This is a <strong>REQUIRED</strong> option. This lets the plugin know what version the docs belong to. It is recommended that you use <a href="https://semver.org/">semantic versioning</a> but any versioning scheme works. The versions are parsed as type <em><code>str</code></em> and is sorted alphabetically in descending order. </p>
-<p>???+ example "Example <em><code>mkdocs.yml</code></em>"
-    <code>yaml
-    plugins:
-    - mkdocs-versioning:
-        version: 0.3.0</code></p>
-<h2 id="option-exclude_from_nav">Option: <em><code>exclude_from_nav</code></em></h2>
-<p>This is a <strong>OPTIONAL</strong> option. This lets the plugin know what version the docs belong to. The value should be a list of paths from the <em><code>docs</code></em> directory.</p>
-<p>???+ example "Example <em><code>mkdocs.yml</code></em>"
-    <code>yaml
-    plugins:
-    - mkdocs-versioning:
-        exclude_from_nav: ["images"]</code></p>
-<h2 id="option-version_selection_page">Option: <em><code>version_selection_page</code></em></h2>
+<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em></summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3.0</span>
+</code></pre></div>
+
+</details>
+<h2 id="option-exclude_from_nav">Option: <em><code>exclude_from_nav</code></em><a class="headerlink" href="#option-exclude_from_nav" title="Permanent link">&para;</a></h2>
+<p>This is a <strong>OPTIONAL</strong> option. This lets the plugin know what files to exclude from the navifation. The value should be a list of paths from the <em><code>docs</code></em> directory.</p>
+<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em></summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
+    <span class="nt">exclude_from_nav</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;images&quot;</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+
+</details>
+<h2 id="option-version_selection_page">Option: <em><code>version_selection_page</code></em><a class="headerlink" href="#option-version_selection_page" title="Permanent link">&para;</a></h2>
 <p>This is a <strong>OPTIONAL</strong> option. This lets the plugin know if there is a custom version selection page and to use rather than the default. The markdown file should be located in the <em><code>docs</code></em> directory</p>
-<p>???+ example "Example <em><code>mkdocs.yml</code></em>"
-    <code>yaml
-    plugins:
-    - mkdocs-versioning:
-        version_selection_page: "version_page.md"</code></p>
+<details class="example" open="open"><summary>Example <em><code>mkdocs.yml</code></em></summary><div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
+    <span class="nt">version_selection_page</span><span class="p">:</span> <span class="s">&quot;version_page.md&quot;</span>
+</code></pre></div>
+
+</details>
                 
                   
                     

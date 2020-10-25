@@ -124,7 +124,7 @@
     
       <div class="md-header-nav__source">
         
-<a href="https://github.com/zayd62/mkdocs-versioning/" title="Go to repository" class="md-source">
+<a href="https://github.com/zayd62/mkdocs-versioning" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
@@ -200,7 +200,7 @@
   
     <div class="md-nav__source">
       
-<a href="https://github.com/zayd62/mkdocs-versioning/" title="Go to repository" class="md-source">
+<a href="https://github.com/zayd62/mkdocs-versioning" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
@@ -429,42 +429,43 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/zayd62/mkdocs-versioning/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
                 
                   
                 
                 
-                <h1 id="home">Home</h1>
+                <h1 id="home">Home<a class="headerlink" href="#home" title="Permanent link">&para;</a></h1>
 <p>Welcome to mkdocs-versioning!</p>
 <p>mkdocs-versioning is a tool that allows you to version documentation built using <a href="https://github.com/mkdocs/mkdocs/">mkdocs</a> allowing users to access historical versions of documentation. mkdocs-versioning works by building each documentation version into its own folder and having a central, continuously updating <em><code>version selection page</code></em> which points to each version built. </p>
-<h2 id="design">Design</h2>
+<h2 id="design">Design<a class="headerlink" href="#design" title="Permanent link">&para;</a></h2>
 <p>mkdocs-versioning is designed with the following principles in mind:</p>
 <ol>
 <li><strong>Theme agnostic</strong>: The plugin should work with any mkdocs theme. mkdocs-versioning takes advantage of the navigation links to implement versioning. </li>
 <li><strong>Strict versioning</strong>: Once a documentation is built, it should <strong>NOT</strong> be overwritten. mkdocs-versioning uses a centralised, continuously updated version selection page which then, using the navigation links, point to built docs. The built docs then have a <strong>relative link</strong> which then points to the version selection page.</li>
-<li><strong>Stateless</strong>: Stateless means that no extra information is stored anywhere in order for the plugin to work. All the plugin needs is the previously built docs, a <strong>new</strong> version number and it can build the new docs and the version selection page.</li>
+<li><strong>Stateless</strong>: Stateless means that no extra information is stored anywhere in order for the plugin to work. All the plugin needs is the previously built docs, a <strong>new</strong> version number and it can build the new docs, the version selection page and have the previous verions of the built docs available and accessible.</li>
 </ol>
-<h2 id="install">Install</h2>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <p>It is <strong>highly</strong> recommended that you use Python <a href="https://docs.python.org/3/tutorial/venv.html">Virtual Environments</a> so not pollute your system install of Python. Once you create and activate your python environment, use <code>pip</code> to install the plugin. Requires Python version &#8805; 3.6.</p>
-<pre><code class="bash">pip install mkdocs
+<div class="highlight"><pre><span></span><code>pip install mkdocs
 pip install mkdocs-versioning
-</code></pre>
+</code></pre></div>
 
-<p>???+ tip
-    An alternative for managing Virtual Environments is <a href="https://www.anaconda.com/products/individual">Anaconda Navigator</a> which provides a nice GUI for managing python virtual environments.</p>
-<h2 id="setup">Setup</h2>
+<details class="tip" open="open"><summary>Tip</summary><p>An alternative for managing Virtual Environments is <a href="https://www.anaconda.com/products/individual">Anaconda Navigator</a> which provides a nice GUI for managing python virtual environments.</p>
+</details>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <p>Once install is complete, use <code>mkdocs new .</code> to create an empty mkdocs project. You should then have an <code>mkdocs.yml</code> file as well as a <code>docs/</code> directory. Now setup <code>mkdocs.yml</code> as shown below (<strong>Note</strong>: You can add more to the config if you wish. This is just the minimum):</p>
-<p>???+ example
-    <code>yaml
-    plugins:
-    - mkdocs-versioning:
-        version: 0.3.0
-    nav:
-      - Home: "index.md"
-      - Version Selector: "../"</code></p>
+<details class="example" open="open"><summary>Example</summary><div class="highlight"><pre><span></span><code><span class="nt">edit_uri</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+
+<span class="nt">plugins</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">mkdocs-versioning</span><span class="p">:</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3.0</span>
+<span class="nt">nav</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Home</span><span class="p">:</span> <span class="s">&quot;index.md&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">Version Selector</span><span class="p">:</span> <span class="s">&quot;../&quot;</span>
+</code></pre></div>
+
+</details>
+<details class="info" open="open"><summary>Why is <code>edit_uri</code> blank </summary><p>Since the plugin stores the previous versions of the <strong>built</strong> documentation, the diting feature will only allow editing of the current documentation. Attemptin</p>
+</details>
 <p>Write your documentation as normal using <code>mkdocs serve</code> to preview your docs as normal. When you run <code>mkdocs build</code>, the plugin will:</p>
 <ol>
 <li>Build your docs into a folder within <code>site/</code> and will be named according to the value of <code>version</code> (in the example, the docs will be built into <code>site/0.3.0/</code>).</li>
@@ -472,8 +473,8 @@ pip install mkdocs-versioning
 <li>Inside <code>site/</code> build a new version selection page.</li>
 </ol>
 <p>Now when you want to build a new version, simply change the value of <code>version</code> (e.g. to 0.4.0) and build again, mkdocs should build the new, updated docs into its own folder and update the version selection page.</p>
-<p>???+ Info
-    This is just a basic working example, there is more functionality built into the docs such as a having a custom version selection page so it is recommended to read through the entire <a href="reference/">details section</a> to get a full understanding of how the plugin works in order to take full advantage of the versioning capabilities.</p>
+<details class="info" open="open"><summary>Info</summary><p>This is just a basic working example, there is more functionality built into the docs such as a having a custom version selection page so it is recommended to read through the entire <a href="reference/">details section</a> to get a full understanding of how the plugin works in order to take full advantage of the versioning capabilities.</p>
+</details>
                 
                   
                     
