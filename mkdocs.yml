@@ -13,6 +13,7 @@ plugins:
 # Repository
 repo_name: "mkdocs-versioning"
 repo_url: "https://github.com/zayd62/mkdocs-versioning"
+edit_uri: ""
 
 theme:
   name: material

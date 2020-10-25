@@ -15,7 +15,7 @@ This is a **REQUIRED** option. This lets the plugin know what version the docs b
 
 ## Option: *`exclude_from_nav`* 
 
-This is a **OPTIONAL** option. This lets the plugin know what version the docs belong to. The value should be a list of paths from the *`docs`* directory.
+This is a **OPTIONAL** option. This lets the plugin know what files to exclude from the navifation. The value should be a list of paths from the *`docs`* directory.
 
 ???+ example "Example *`mkdocs.yml`*"
     ```yaml
