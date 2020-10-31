@@ -1,7 +1,9 @@
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
+import pathlib
 
 from mkdocs import config, exceptions
 from mkdocs.commands import gh_deploy
@@ -39,26 +41,35 @@ def sync(args):
     """
 
     cfg = config.load_config(config_file=args.config_file)
+    if pathlib.Path(cfg['site_dir']).exists():
+        print("Error: site directory already exists, please remove before running the sync command")
+        sys.exit(1)
+
     with tempfile.TemporaryDirectory() as tempdir:
         # clone gh-pages branch into a temp dir
         os.chdir(tempdir)
         subprocess.run(['git', 'clone', '-b', cfg['remote_branch'], cfg['repo_url']])
-        # noinspection PyArgumentList
-        os.chdir(os.listdir()[0])
+        # remove '.DS_Store' so that only the cloned repository exists. specific to mac os only
+        try:
+            os.remove(".DS_Store")
+        except (FileNotFoundError):
+            pass
+
+        cloned_dir = os.listdir()[0]
+        os.chdir(cloned_dir)
+        shutil.rmtree('.git')
 
         # remove old site folder
         try:
             shutil.rmtree(cfg['site_dir'])
-            os.mkdir(cfg['site_dir'])  # rmtree deletes folder so you need to recreate folder
+            # os.mkdir(cfg['site_dir'])  # rmtree deletes folder so you need to recreate folder
         except FileNotFoundError as identifier:
             print(identifier)
             print('no site directory')
-
-        # copy files into site directory
-        with os.scandir(os.getcwd()) as files:
-            for i in files:
-                print(i.name, i.path)
-                shutil.move(i.path, cfg['site_dir'])
+        print("now moving")
+        built_docs_dir = pathlib.Path(tempdir, cloned_dir)
+        shutil.copytree(built_docs_dir, cfg['site_dir'])
+        print("finsihed move")
 
 
 def unhide_docs(args):
