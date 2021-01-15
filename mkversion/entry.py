@@ -44,8 +44,9 @@ class Entry(BasePlugin):
         if Entry.is_serving(config['site_dir']):
             nav = config['nav']
             for count, i in enumerate(nav):
-                if 'version selector' in [j.lower() for j in i.keys()]:
+                if hasattr(i, 'keys') and 'version selector' in [j.lower() for j in i.keys()]:
                     del nav[count]
+                    break
         # check if version selector is in nav
         # if not, then exit
 
