@@ -14,7 +14,8 @@ class Entry(BasePlugin):
     config_scheme = (
         ('version', config_options.Type(str)),
         ('exclude_from_nav', config_options.Type(list, default=[])),
-        ('version_selection_page', config_options.File())
+        ('version_selection_page', config_options.File()),
+        ('version_selector_title', config_options.Type(str)),
     )
 
     def on_config(self, config: Dict[str, str], **kwargs) -> Dict[str, str]:
@@ -44,7 +45,7 @@ class Entry(BasePlugin):
         if Entry.is_serving(config['site_dir']):
             nav = config['nav']
             for count, i in enumerate(nav):
-                if hasattr(i, 'keys') and 'version selector' in [j.lower() for j in i.keys()]:
+                if hasattr(i, 'keys') and self.config['version_selector_title'].lower() in [j.lower() for j in i.keys()]:
                     del nav[count]
                     break
         # check if version selector is in nav
@@ -68,6 +69,10 @@ class Entry(BasePlugin):
             version_page_path = pathlib.Path(version_page_path)
             if os.path.exists(version_page_path.absolute()):
                 hide_md(version_page_path.absolute())
+
+        if self.config['version_selector_title'] is None:
+            self.config['version_selector_title'] = 'version selector'
+
         return config
 
     def on_post_build(self, config: Dict[str, str], **kwargs) -> Dict[str, str]:
