@@ -43,12 +43,12 @@ In case of using [awesome-pages](https://github.com/lukasgeiter/mkdocs-awesome-p
 ```
 Traceback (most recent call last):
   [...]
-  File "/path/to/mkversion/entry.py", line , on_config
+  File "/path/to/mkversion/entry.py", line 47, on_config
     for count, i in enumerate(nav):
 TypeError: 'NoneType' object is not iterable
 ```
 
-You need to make sure, that the `awesome-pages` plugin is register **after** `mkdocs-versioning:
+You need to make sure, that the `awesome-pages` plugin is register **after** `mkdocs-versioning`:
 
 ```yaml
 plugins:
