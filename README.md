@@ -33,3 +33,27 @@ Please note that mkdocs-versioning is currently in **Beta** and there may be mis
 
 1. finding and reporting bugs
 2. contributing by checking out the [issues](https://github.com/zayd62/mkdocs-versioning/issues)
+
+## Troubleshooting
+
+### Combined use of awesome-pages and mkdocs-versioning
+
+In case of using [awesome-pages](https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin/) the order of registration within the `plugins` is important. The following error may occur:
+
+```
+Traceback (most recent call last):
+  [...]
+  File "/path/to/mkversion/entry.py", line , on_config
+    for count, i in enumerate(nav):
+TypeError: 'NoneType' object is not iterable
+```
+
+You need to make sure, that the `awesome-pages` plugin is register **after** `mkdocs-versioning:
+
+```yaml
+plugins:
+  - mkdocs-versioning:
+      version: "1.0"
+  - awesome-pages
+````
+
