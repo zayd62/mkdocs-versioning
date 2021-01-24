@@ -15,7 +15,6 @@ class Entry(BasePlugin):
         ('version', config_options.Type(str)),
         ('exclude_from_nav', config_options.Type(list, default=[])),
         ('version_selection_page', config_options.File()),
-        ('version_selector_title', config_options.Type(str)),
     )
 
     def on_config(self, config: Dict[str, str], **kwargs) -> Dict[str, str]:
@@ -45,7 +44,7 @@ class Entry(BasePlugin):
         if Entry.is_serving(config['site_dir']):
             nav = config['nav']
             for count, i in enumerate(nav):
-                if hasattr(i, 'keys') and self.config['version_selector_title'].lower() in [j.lower() for j in i.keys()]:
+                if hasattr(i, 'keys') in [j.lower() for j in i.keys()]:
                     del nav[count]
                     break
         # check if version selector is in nav
@@ -53,6 +52,7 @@ class Entry(BasePlugin):
 
         if not Entry.is_serving(config['site_dir']):
             if not Entry.is_version_selector_in_config(config['nav']):
+                print('version selector not specified correctly, see docs for more info')
                 sys.exit(2)
 
         # check if docs for specified version in config already exists
@@ -69,9 +69,6 @@ class Entry(BasePlugin):
             version_page_path = pathlib.Path(version_page_path)
             if os.path.exists(version_page_path.absolute()):
                 hide_md(version_page_path.absolute())
-
-        if self.config['version_selector_title'] is None:
-            self.config['version_selector_title'] = 'version selector'
 
         return config
 
@@ -155,11 +152,7 @@ class Entry(BasePlugin):
             bool: True if config contains version selector, false otherwise
         """
         for i in nav:
-            if 'version selector' in [j.lower() for j in i.keys()]:
-                # if true, check if the value is '../'
-                for k in i.values():
-                    if k == '../':
-                        return True
-                    else:
-                        print('Version Selector not specified correctly')
-                        return False
+            value = list(i.values())
+            if '../' in value:
+                return True
+        return False
