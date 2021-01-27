@@ -152,7 +152,7 @@ class Entry(BasePlugin):
             bool: True if config contains version selector, false otherwise
         """
         for i in nav:
-            value = list(i.values())
+            value = list(i.values()) if hasattr(i, 'values') else []
             if '../' in value:
                 return True
         return False
