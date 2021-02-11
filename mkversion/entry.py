@@ -14,7 +14,7 @@ class Entry(BasePlugin):
     config_scheme = (
         ('version', config_options.Type(str)),
         ('exclude_from_nav', config_options.Type(list, default=[])),
-        ('version_selection_page', config_options.File())
+        ('version_selection_page', config_options.File()),
     )
 
     def on_config(self, config: Dict[str, str], **kwargs) -> Dict[str, str]:
@@ -41,16 +41,9 @@ class Entry(BasePlugin):
         if not Entry.is_serving(config['site_dir']):
             config['site_dir'] = new_dir
 
-        if Entry.is_serving(config['site_dir']):
-            nav = config['nav']
-            for count, i in enumerate(nav):
-                if 'version selector' in [j.lower() for j in i.keys()]:
-                    del nav[count]
-        # check if version selector is in nav
-        # if not, then exit
-
         if not Entry.is_serving(config['site_dir']):
             if not Entry.is_version_selector_in_config(config['nav']):
+                print('version selector not specified correctly, see docs for more info')
                 sys.exit(2)
 
         # check if docs for specified version in config already exists
@@ -67,6 +60,7 @@ class Entry(BasePlugin):
             version_page_path = pathlib.Path(version_page_path)
             if os.path.exists(version_page_path.absolute()):
                 hide_md(version_page_path.absolute())
+
         return config
 
     def on_post_build(self, config: Dict[str, str], **kwargs) -> Dict[str, str]:
@@ -149,11 +143,7 @@ class Entry(BasePlugin):
             bool: True if config contains version selector, false otherwise
         """
         for i in nav:
-            if 'version selector' in [j.lower() for j in i.keys()]:
-                # if true, check if the value is '../'
-                for k in i.values():
-                    if k == '../':
-                        return True
-                    else:
-                        print('Version Selector not specified correctly')
-                        return False
+            value = list(i.values()) if hasattr(i, 'values') else []
+            if '../' in value:
+                return True
+        return False

@@ -34,3 +34,14 @@ This is a **OPTIONAL** option. This lets the plugin know if there is a custom ve
     - mkdocs-versioning:
         version_selection_page: "version_page.md"
     ```
+
+## Option: *`version_selector_title`* 
+
+This is a **??** option.
+
+???+ example "Example *`mkdocs.yml`*"
+    ```yaml
+    plugins:
+    - mkdocs-versioning:
+        version_selector_title: "title"
+    ```

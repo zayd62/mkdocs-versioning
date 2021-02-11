@@ -7,13 +7,12 @@ plugins:
   - git-revision-date-localized:
       type: datetime
   - mkdocs-versioning:
-      version: 0.3.0
+      version: 0.4.0
       exclude_from_nav: ["images"]
 
 # Repository
 repo_name: "mkdocs-versioning"
 repo_url: "https://github.com/zayd62/mkdocs-versioning"
-edit_uri: ""
 
 theme:
   name: material
@@ -35,6 +34,7 @@ nav:
       - Step by Step Example: "reference/step_by_step.md"
       - Config Options: "reference/config_options.md"
       - CLI Options: "reference/cli.md"
+  - Troubleshooting: "troubleshooting.md"
   - Version Selector: "../"
 
 markdown_extensions:
