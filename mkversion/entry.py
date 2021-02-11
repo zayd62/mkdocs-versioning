@@ -41,15 +41,6 @@ class Entry(BasePlugin):
         if not Entry.is_serving(config['site_dir']):
             config['site_dir'] = new_dir
 
-        if Entry.is_serving(config['site_dir']):
-            nav = config['nav']
-            for count, i in enumerate(nav):
-                if hasattr(i, 'keys') and [j.lower() for j in i.keys()]:
-                    del nav[count]
-                    break
-        # check if version selector is in nav
-        # if not, then exit
-
         if not Entry.is_serving(config['site_dir']):
             if not Entry.is_version_selector_in_config(config['nav']):
                 print('version selector not specified correctly, see docs for more info')
