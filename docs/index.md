@@ -8,7 +8,7 @@ mkdocs-versioning is a tool that allows you to version documentation built using
 
 mkdocs-versioning is designed with the following principles in mind:
 
-1. **Theme agnostic**: The plugin should work with any mkdocs theme. mkdocs-versioning takes advantage of the navigation links to implement versioning. 
+1. **Theme/Plugin agnostic**: The plugin should work with any mkdocs theme/plugin. The plugin works by taking advantage of the navigation links to implement versioning . 
 2. **Strict versioning**: Once a documentation is built, it should **NOT** be overwritten. mkdocs-versioning uses a centralised, continuously updated version selection page which then, using the navigation links, point to built docs. The built docs then have a **relative link** which then points to the version selection page.
 3. **Stateless**: Stateless means that no extra information is stored anywhere in order for the plugin to work. All the plugin needs is the previously built docs, a **new** version number and it can build the new docs, the version selection page and have the previous verions of the built docs available and accessible.
 
@@ -31,7 +31,6 @@ Once install is complete, use `mkdocs new .` to create an empty mkdocs project. 
 
 ???+ example
     ```yaml
-    edit_uri: ""
 
     plugins:
     - mkdocs-versioning:
@@ -40,8 +39,6 @@ Once install is complete, use `mkdocs new .` to create an empty mkdocs project. 
       - Home: "index.md"
       - Version Selector: "../"
     ```
-???+ Info "Why is `edit_uri` blank "
-    Since the plugin stores the previous versions of the **built** documentation, the diting feature will only allow editing of the current documentation. Attemptin
 
 Write your documentation as normal using `mkdocs serve` to preview your docs as normal. When you run `mkdocs build`, the plugin will:
 
