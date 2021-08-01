@@ -4,6 +4,10 @@
 
 `mkdocs-versioning` extends mkdocs by differentiating between different versions of documentation you may build. For example, a newer versions of some software may work differently from an older version and it is important that users of an older version of the software reads the appropriate version of the documentation in order to ensure that the user has the correct information and uses the software appropriately.
 
+## Archive
+
+The project is no longer maintained. Instead, use https://github.com/jimporter/mike as it is more popular and is under active development. The plugin should still work as long as mkdocs does not change how it builds documentation. If you are willing to take over the project, feel free to get in touch.
+
 ## Setup
 
 Install the plugin using pip:
